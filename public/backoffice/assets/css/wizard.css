@@ -1,0 +1,195 @@
+/* STEP 1
+PAKET PRODUCT */
+.card-input-element {
+    display: none;
+    cursor: pointer;
+}
+
+.card-default {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-shadow: 0 1px 1px rgba(0,0,0,.05);
+}
+
+.card-default-selected {
+    background-color: #fff;
+    border: 1px solid rgb(33, 148, 255);
+    border-radius: 4px;
+    box-shadow: 0 1px 1px rgba(0,0,0,.05);
+}
+
+.bg-selected-card {
+    background-color: #f5f5f5;
+}
+
+.card-default:hover {
+    border: 1px solid rgb(33, 148, 255);
+    cursor: pointer;
+}
+
+.btn-block {
+    display: block;
+    width: 100%;
+    background-color: rgb(245, 245, 245);
+    font-size: 14px;
+    font-weight: 700;
+    color: rgb(20, 59, 94);
+}
+
+.btn-block a{
+    color: #000000;
+}
+
+.btn-block:active, .btn-block:focus, .btn-block:active:focus {
+    background-color: rgb(235, 235, 235);
+    color: rgb(20, 59, 94);
+}
+
+.btn-block:hover {
+    background-color: rgb(235, 235, 235);
+    color: rgb(20, 59, 94);
+}
+
+.border-dashed {
+    border-top: 2px dashed #ddd;
+}
+
+
+/* FINISH
+Card Icon */
+.icon-container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 200px;
+    height: 200px;
+}
+
+.icon {
+    position: relative;
+    z-index: 2;
+}
+
+.bg-animate-ping {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100px; /* Set a fixed width */
+    height: 100px; /* Set a fixed height */
+    background: rgba(33, 148, 255, 0.2);
+    border-radius: 50%; /* Make it circular */
+    animation: ping 2s infinite;
+}
+
+.animate-bounce {
+    animation: bounce 1s infinite;
+}
+
+@keyframes ping {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.5);
+        opacity: 0.5;
+    }
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-30px);
+    }
+    60% {
+        transform: translateY(-15px);
+    }
+}
+
+/* STEP WIZARD VALIDATION */
+.stepwizard-step p {
+    margin-top: 10px;
+}
+
+.stepwizard-row {
+    display: flex;
+    justify-content: space-between;
+}
+
+.stepwizard {
+    display: table;
+    width: 100%;
+    position: relative;
+}
+
+.stepwizard-step button[disabled] {
+    opacity: 1 !important;
+    filter: alpha(opacity=100) !important;
+}
+
+
+.stepwizard-row:before {
+    top: 14px;
+    bottom: 0;
+    position: absolute;
+    content: " ";
+    width: 100%;
+    height: 1px;
+    background-color: #ccc;
+    z-order: 0;
+}
+
+
+.stepwizard-step {
+    flex: 1;
+    text-align: center;
+    position: relative;
+}
+
+.btn-circle {
+    margin-top: -10px;
+    width: 60px;
+    height: 60px;
+    text-align: center;
+    padding: 12px 0;
+    font-size: 24px;
+    line-height: 1.428571429;
+    border-radius: 50%;
+}
+
+.btn-default {
+    background-color: #fff;
+    margin-top: -10px;
+    width: 60px;
+    height: 60px;
+    text-align: center;
+    padding: 12px 0;
+    font-size: 24px;
+    line-height: 1.428571429;
+    border: 1px solid #696CFF;
+    border-radius: 50%;
+}
+
+.btn-circle:hover {
+    cursor: pointer;
+}
+
+.setup-panel {
+    margin-bottom: 20px;
+}
+
+.displayNone {
+    display: none;
+}
+
+
+/* STEP 2 */
+.underline {
+    text-decoration: underline;
+    color: #696CFF;
+}
+
