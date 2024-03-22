@@ -10,7 +10,7 @@ class PresensiSholat extends Model
     use HasFactory;
 
     protected $table = 'presensi_sholat';
-    protected $guarded = ['id'];
+    // protected $guarded = ['id'];
     protected $fillable = [
         'jadwal_sholat_id',
         'sekolah_id',

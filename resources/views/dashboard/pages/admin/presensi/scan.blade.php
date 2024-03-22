@@ -38,7 +38,7 @@
         $(document).ready(function() {
             setInterval(function() {
                 $('#baca-kartu').load('{{ route('baca-kartu.index') }}')
-            }, 2000);
+            }, 5000);
         });
     </script>
 

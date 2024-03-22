@@ -3,67 +3,67 @@
 @section('content')
     <div class="container-xxl flex-grow-1 container-p-y">
         <div class="row">
-            <div class="card mb-2" style="background: #fbfbfb">
-                <h4 class="font-weight-bold py-3 mb-0 card-header text-dark">Siswa</h4>
-                <div class="col-lg-12 mb-2 order-0">
-                    <div class="row">
-                        <div class="col-lg-4 col-md-6 col-6 mb-4">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="card-title d-flex align-items-start justify-content-between">
-                                        <span class="fw-semibold d-block">Total Data Siswa</span>
-                                        <div class="avatar flex-shrink-0">
-                                            <img src="{{ asset('backoffice/assets/img/icons/unicons/chart-success.png') }}"
-                                                alt="chart success" class="rounded">
-                                        </div>
+
+            <h4 class="font-weight-bold py-3 mb-0 card-header text-dark">Siswa {{ $sekolah->nama_sekolah }}</h4>
+            <div class="col-lg-12 mb-2 order-0">
+                <div class="row">
+                    <div class="col-lg-4 col-md-6 col-6 mb-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="card-title d-flex align-items-start justify-content-between">
+                                    <span class="fw-semibold d-block">Total Data Siswa</span>
+                                    <div class="avatar flex-shrink-0">
+                                        <img src="{{ asset('backoffice/assets/img/icons/unicons/chart-success.png') }}"
+                                            alt="chart success" class="rounded">
                                     </div>
-                                    <div class="d-flex">
-                                        <h3 class="card-title mb-2 me-2">215</h3>
-                                        <small class="text-secondary fw-light text-middle mt-2">
-                                            Siswa</small>
-                                    </div>
+                                </div>
+                                <div class="d-flex">
+                                    <h3 class="card-title mb-2 me-2">{{ $totalDataSiswa }}</h3>
+                                    <small class="text-secondary fw-light text-middle mt-2">
+                                        Siswa</small>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-4 col-md-6 col-6 mb-4">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="card-title d-flex align-items-start justify-content-between">
-                                        <span class="fw-semibold d-block">Total Siswa Laki-Laki</span>
-                                        <div class="avatar flex-shrink-0">
-                                            <img src="{{ asset('backoffice/assets/img/icons/unicons/chart-success.png') }}"
-                                                alt="chart success" class="rounded">
-                                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-6 mb-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="card-title d-flex align-items-start justify-content-between">
+                                    <span class="fw-semibold d-block">Total Siswa Laki-Laki</span>
+                                    <div class="avatar flex-shrink-0">
+                                        <img src="{{ asset('backoffice/assets/img/icons/unicons/chart-success.png') }}"
+                                            alt="chart success" class="rounded">
                                     </div>
-                                    <div class="d-flex">
-                                        <h3 class="card-title mb-2 me-2">215</h3>
-                                        <small class="text-secondary fw-light text-middle mt-2">
-                                            Siswa</small>
-                                    </div>
+                                </div>
+                                <div class="d-flex">
+                                    <h3 class="card-title mb-2 me-2">{{ $totalDataSiswaLaki }}</h3>
+                                    <small class="text-secondary fw-light text-middle mt-2">
+                                        Siswa</small>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-4 col-md-6 col-6 mb-4">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="card-title d-flex align-items-start justify-content-between">
-                                        <span class="fw-semibold d-block">Total Siswa Perempuan</span>
-                                        <div class="avatar flex-shrink-0">
-                                            <img src="{{ asset('backoffice/assets/img/icons/unicons/chart-success.png') }}"
-                                                alt="chart success" class="rounded">
-                                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-6 mb-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="card-title d-flex align-items-start justify-content-between">
+                                    <span class="fw-semibold d-block">Total Siswa Perempuan</span>
+                                    <div class="avatar flex-shrink-0">
+                                        <img src="{{ asset('backoffice/assets/img/icons/unicons/chart-success.png') }}"
+                                            alt="chart success" class="rounded">
                                     </div>
-                                    <div class="d-flex">
-                                        <h3 class="card-title mb-2 me-2">215</h3>
-                                        <small class="text-secondary fw-light text-middle mt-2">
-                                            Siswa</small>
-                                    </div>
+                                </div>
+                                <div class="d-flex">
+                                    <h3 class="card-title mb-2 me-2">{{ $totalDataSiswaPerempuan }}</h3>
+                                    <small class="text-secondary fw-light text-middle mt-2">
+                                        Siswa</small>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+
             <div class="card mb-4">
                 <h6 class="card-header fw-bold">Data Siswa</h6>
                 <div class="card-body">
@@ -76,8 +76,10 @@
                             </div>
                         </div>
                         <div class="col-md-6 text-end">
-                            {{-- <a href="{{ url('siswa/tambah') }}" class="btn btn-primary "><i class="bx bx-plus"></i>
-                                Siswa</a> --}}
+                            <button type="button" class="btn btn-success" data-bs-toggle="modal"
+                                data-bs-target="#tambahModal">
+                                <i class="bx bx-plus"></i> Import Excel
+                            </button>
                             <button type="button" class="btn btn-primary " data-bs-toggle="modal"
                                 data-bs-target="#tambahModal">
                                 <i class="bx bx-plus"></i> Siswa
@@ -138,11 +140,11 @@
                                         <td>{{ $s->nis }}</td>
                                         <td>
                                             <button type="button" class="btn btn-warning btn-sm mb-2"
-                                                data-bs-toggle="modal" data-bs-target="#editModal_">
+                                                data-bs-toggle="modal" data-bs-target="#editModal_{{ $s->id }}">
                                                 <i class="bx bx-edit"></i>
                                             </button>
                                             <button type="button" class="btn btn-danger btn-sm mb-2" data-bs-toggle="modal"
-                                                data-bs-target="#hapusModal_">
+                                                data-bs-target="#hapusModal_{{ $s->id }}">
                                                 <i class="bx bx-trash"></i>
                                             </button>
                                         </td>
@@ -278,6 +280,183 @@
         </div>
     </div>
 
+    <!-- Edit Modal -->
+    @foreach ($siswa as $item)
+        <div class="modal fade" id="editModal_{{ $item->id }}" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel1">Edit Data Siswa</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form action="{{ route('siswa.update', $item->id) }}" method="POST">
+                        @csrf
+                        @method('PUT')
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label for="sekolah" class="form-label">Sekolah</label>
+                                <input type="text" id="sekolah" class="form-control" name="sekolah"
+                                    value="{{ $sekolah->nama_sekolah ?? '' }}" readonly />
+                                <input type="hidden" name="sekolah_id" value="{{ $sekolah->id ?? '' }}" />
+                                @error('sekolah')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+                            <div class="mb-3">
+                                <label for="no_kartu" class="form-label">ID Kartu</label>
+                                <input type="text" id="no_kartu" class="form-control" name="no_kartu"
+                                    value="{{ $item->no_kartu }}" readonly />
+                                @error('no_kartu')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="nama_lengkap" class="form-label">Nama</label>
+                                        <input type="text" id="nama_lengkap" class="form-control" name="nama_lengkap"
+                                            value="{{ $item->nama_lengkap }}" />
+                                        @error('nama_lengkap')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="nip" class="form-label">NIS</label>
+                                        <input type="text" id="nip" class="form-control" name="nis"
+                                            value="{{ $item->nis }}" />
+                                        @error('nip')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="noHp" class="form-label">No. HP (Orang Tua)</label>
+                                <input type="text" id="no_hp" class="form-control" name="no_hp"
+                                    value="{{ $item->no_hp }}" />
+                                @error('no_hp')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="col mb-3">
+                                        <label for="jurusan" class="form-label">Jurusan</label>
+                                        <select class="form-select" id="jurusan" name="jurusan_id">
+                                            <option disabled>Pilih Jurusan</option>
+                                            @foreach ($jurusan as $value)
+                                                <option value="{{ $value->id }}"
+                                                    {{ $item->jurusan == $value->jurusan ? 'selected' : '' }}>
+                                                    {{ $value->jurusan }}</option>
+                                            @endforeach
+                                        </select>
+                                        @error('jurusan_id')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="col mb-3">
+                                        <label for="kelas" class="form-label">Kelas</label>
+                                        <select class="form-select" id="kelas" name="kelas_id">
+                                            <option disabled>Pilih Kelas</option>
+                                            @foreach ($kelas as $value)
+                                                <option value="{{ $value->id }}" class="kelas-option"
+                                                    data-jurusan="{{ $value->jurusan_id }}"
+                                                    {{ $item->kelas == $value->kelas ? 'selected' : '' }}>
+                                                    {{ $value->kelas }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        @error('kelas_id')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="jenis_kelamin" class="form-label">Jenis Kelamin</label>
+                                <select class="form-select" id="jenis_kelamin" name="jenis_kelamin">
+                                    <option disabled>Pilih Jenis Kelamin</option>
+                                    <option value="L" {{ $item->jenis_kelamin == 'L' ? 'selected' : '' }}>
+                                        Laki-laki</option>
+                                    <option value="P" {{ $item->jenis_kelamin == 'P' ? 'selected' : '' }}>
+                                        Perempuan</option>
+                                </select>
+                                @error('jenis_kelamin')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-secondary"
+                                data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Simpan</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    @endforeach
+
+
+    <!-- Hapus Modal -->
+    @foreach ($siswa as $item)
+        <div class="modal fade" id="hapusModal_{{ $item->id }}" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form action="{{ route('siswa.destroy', $item->id) }}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="align-items-center text-center">
+                                    <i class="bx bx-trash text-danger mb-1"
+                                        style="font-size: 2em; background-color: #ffcccc; padding: 10px; border-radius: 50%;"></i>
+                                    <p class="text-center"><strong>Menghapus data siswa
+                                            {{ $item->nama_lengkap }}</strong><br>anda yakin ingin menghapus data ini?
+                                    </p>
+                                </div>
+                                <div class="align-items-center text-left">
+                                    <label for="nama_lengkap" class="form-label">Ketik :
+                                        {{ $item->nama_lengkap }}</label>
+                                    <input type="text" id="nama_lengkap" class="form-control" name="nama_lengkap" />
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                                Close
+                            </button>
+                            <button type="submit" class="btn btn-danger">Hapus!</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    @endforeach
 
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script>

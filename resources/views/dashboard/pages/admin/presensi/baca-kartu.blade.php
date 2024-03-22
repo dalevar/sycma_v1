@@ -32,11 +32,11 @@
     
         // Cek apakah sudah masuk waktu sholat
         if ($jam == $waktu_bersiap) {
-            $status = 'Sholat';
+            $status = 'Tepat Waktu';
         } elseif ($jam >= $waktu_bersiap && $jam <= $waktu_selesai) {
-            $status = 'Sholat';
+            $status = 'Tepat Waktu';
         } elseif ($jam >= $waktu_selesai) {
-            $status = 'Terlambat';
+            $status = 'Sholat';
         } else {
             $status = 'Tidak Sholat';
         }
@@ -54,6 +54,8 @@
                 'jenis_sholat' => 'Dzuhur',
                 'status' => $status,
             ]);
+        } elseif ($jumlah_absen > 0 && $mode_absen == 1) {
+            echo '<h3>Anda sudah Melaksanakan Sholat Dzuhur hari ini</h3>';
         } elseif ($mode_absen == 1) {
             $cek_absen->update(['jam_sholat' => $jam]);
         }

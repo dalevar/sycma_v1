@@ -38,10 +38,11 @@ class SiswaController extends Controller
                 $nokartu = 'Tempelkan Kartu';
             }
 
+            $totalDataSiswa = Siswa::where('sekolah_id', $sekolah->id)->count();
+            $totalDataSiswaLaki = Siswa::where('sekolah_id', $sekolah->id)->where('jenis_kelamin', 'L')->count();
+            $totalDataSiswaPerempuan = Siswa::where('sekolah_id', $sekolah->id)->where('jenis_kelamin', 'P')->count();
 
-
-
-            return view('dashboard.pages.admin.siswa.siswa', compact('admin', 'sekolah', 'jurusan', 'kelasArray', 'kelas', 'nokartu', 'siswa'));
+            return view('dashboard.pages.admin.siswa.siswa', compact('admin', 'sekolah', 'jurusan', 'kelasArray', 'kelas', 'nokartu', 'siswa', 'totalDataSiswa', 'totalDataSiswaLaki', 'totalDataSiswaPerempuan'));
         } elseif (Auth::guard('web')->check() == true) {
             $guru = Auth::guard('web')->user();
             $sekolah = $guru->sekolah;
@@ -67,33 +68,6 @@ class SiswaController extends Controller
         return response()->json($kelas);
     }
 
-    public function tambahSiswa()
-    {
-        $admin = Auth::guard('admin')->user();
-        $sekolah = $admin->sekolah;
-
-        $siswa = Siswa::where('sekolah_id', $sekolah->id)->get();
-
-        $jurusan = $sekolah->jurusan;
-        $kelas = $sekolah->kelas;
-
-        $kelasArray = [];
-        foreach ($kelas as $k) {
-            $kelasArray[$k->id] = $k->kelas;
-        }
-
-        // Ambil data dari tabel temporary_rfid
-        $temporaryRfid = TemporaryRfid::first(); // Mengambil hanya satu baris data pertama
-        // Tampilkan no_kartu
-        if ($temporaryRfid) {
-            $nokartu = $temporaryRfid->no_kartu;
-        } else {
-            $nokartu = 'Tempelkan Kartu';
-        }
-
-        return view('dashboard.pages.admin.siswa.tambah', compact('admin', 'sekolah', 'jurusan', 'kelasArray', 'kelas', 'nokartu', 'siswa'));
-    }
-
     public function store(Request $request)
     {
         $request->validate([
@@ -116,5 +90,42 @@ class SiswaController extends Controller
         }
 
         return redirect()->route('siswa.index')->with('success', 'Data siswa berhasil ditambahkan');
+    }
+
+    public function update(Request $request, Siswa $siswa)
+    {
+        $request->validate([
+            'no_kartu' => 'required',
+            'sekolah_id' => 'required',
+            'nama_lengkap' => 'required',
+            'kelas_id' => 'required',
+            'jurusan_id' => 'required',
+            'jenis_kelamin' => 'required',
+            'no_hp' => 'required',
+            'nis' => 'required'
+        ]);
+
+        $siswa->update($request->all());
+
+        return redirect()->route('siswa.index')->with('update', 'Data siswa berhasil diubah');
+    }
+
+    public function destroy(Request $request, Siswa $siswa)
+
+    {
+        $admin = Auth::guard('admin')->user();
+        $sekolah = $admin->sekolah;
+        $request->validate([
+            'nama_lengkap' => 'required|string|max:255',
+        ]);
+
+        if ($request->nama_lengkap != $siswa->nama_lengkap) {
+            return redirect()->route('siswa.index')->with('error', ' Gagal menghapus siswa Nama siswa tidak cocok dengan data siswa yang akan dihapus');
+        } elseif ($request->nama_lengkap == null || $request->nama_lengkap == '') {
+            return redirect()->route('siswa.index')->with('error', ' Gagal menghapus siswa Lengkapi nama siswa terlebih dahulu');
+        } else {
+            $siswa->delete();
+            return redirect()->route('siswa.index')->with('delete', ' siswa berhasil dihapus');
+        }
     }
 }

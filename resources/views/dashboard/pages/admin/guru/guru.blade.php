@@ -3,67 +3,67 @@
 @section('content')
     <div class="container-xxl flex-grow-1 container-p-y">
         <div class="row">
-            <div class="card mb-2" style="background: #fbfbfb">
-                <h4 class="font-weight-bold py-3 mb-0 card-header text-dark">Guru {{ $sekolah->nama_sekolah }}</h4>
-                <div class="col-lg-12 mb-2 order-0">
-                    <div class="row">
-                        <div class="col-lg-4 col-md-6 col-6 mb-4">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="card-title d-flex align-items-start justify-content-between">
-                                        <span class="fw-semibold d-block">Total Data Guru</span>
-                                        <div class="avatar flex-shrink-0">
-                                            <img src="{{ asset('backoffice/assets/img/icons/unicons/chart-success.png') }}"
-                                                alt="chart success" class="rounded">
-                                        </div>
+
+            <h4 class="font-weight-bold py-3 mb-0 card-header text-dark">Guru {{ $sekolah->nama_sekolah }}</h4>
+            <div class="col-lg-12 mb-2 order-0">
+                <div class="row">
+                    <div class="col-lg-4 col-md-6 col-6 mb-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="card-title d-flex align-items-start justify-content-between">
+                                    <span class="fw-semibold d-block">Total Data Guru</span>
+                                    <div class="avatar flex-shrink-0">
+                                        <img src="{{ asset('backoffice/assets/img/icons/unicons/chart-success.png') }}"
+                                            alt="chart success" class="rounded">
                                     </div>
-                                    <div class="d-flex">
-                                        <h3 class="card-title mb-2 me-2">{{ $totalGuru }}</h3>
-                                        <small class="text-secondary fw-light text-middle mt-2">
-                                            Guru</small>
-                                    </div>
+                                </div>
+                                <div class="d-flex">
+                                    <h3 class="card-title mb-2 me-2">{{ $totalGuru }}</h3>
+                                    <small class="text-secondary fw-light text-middle mt-2">
+                                        Guru</small>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-4 col-md-6 col-6 mb-4">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="card-title d-flex align-items-start justify-content-between">
-                                        <span class="fw-semibold d-block">Total Guru Laki-Laki</span>
-                                        <div class="avatar flex-shrink-0">
-                                            <img src="{{ asset('backoffice/assets/img/icons/unicons/chart-success.png') }}"
-                                                alt="chart success" class="rounded">
-                                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-6 mb-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="card-title d-flex align-items-start justify-content-between">
+                                    <span class="fw-semibold d-block">Total Guru Laki-Laki</span>
+                                    <div class="avatar flex-shrink-0">
+                                        <img src="{{ asset('backoffice/assets/img/icons/unicons/chart-success.png') }}"
+                                            alt="chart success" class="rounded">
                                     </div>
-                                    <div class="d-flex">
-                                        <h3 class="card-title mb-2 me-2">{{ $totalGuruLaki }}</h3>
-                                        <small class="text-secondary fw-light text-middle mt-2">
-                                            Guru</small>
-                                    </div>
+                                </div>
+                                <div class="d-flex">
+                                    <h3 class="card-title mb-2 me-2">{{ $totalGuruLaki }}</h3>
+                                    <small class="text-secondary fw-light text-middle mt-2">
+                                        Guru</small>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-4 col-md-6 col-6 mb-4">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="card-title d-flex align-items-start justify-content-between">
-                                        <span class="fw-semibold d-block">Total Guru Perempuan</span>
-                                        <div class="avatar flex-shrink-0">
-                                            <img src="{{ asset('backoffice/assets/img/icons/unicons/chart-success.png') }}"
-                                                alt="chart success" class="rounded">
-                                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-6 mb-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="card-title d-flex align-items-start justify-content-between">
+                                    <span class="fw-semibold d-block">Total Guru Perempuan</span>
+                                    <div class="avatar flex-shrink-0">
+                                        <img src="{{ asset('backoffice/assets/img/icons/unicons/chart-success.png') }}"
+                                            alt="chart success" class="rounded">
                                     </div>
-                                    <div class="d-flex">
-                                        <h3 class="card-title mb-2 me-2">{{ $totalGuruPerempuan }}</h3>
-                                        <small class="text-secondary fw-light text-middle mt-2">
-                                            Guru</small>
-                                    </div>
+                                </div>
+                                <div class="d-flex">
+                                    <h3 class="card-title mb-2 me-2">{{ $totalGuruPerempuan }}</h3>
+                                    <small class="text-secondary fw-light text-middle mt-2">
+                                        Guru</small>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+
             <div class="card mb-4">
                 <h6 class="card-header fw-bold">Data Guru</h6>
                 <div class="card-body">
@@ -84,7 +84,11 @@
                             </form>
                         </div> --}}
                         <div class="col-md-6 text-end">
-                            <button type="button" class="btn btn-primary " data-bs-toggle="modal"
+                            <button type="button" class="btn btn-success" data-bs-toggle="modal"
+                                data-bs-target="#tambahModal">
+                                <i class="bx bx-plus"></i> Import Excel
+                            </button>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                                 data-bs-target="#tambahModal">
                                 <i class="bx bx-plus"></i> Guru
                             </button>

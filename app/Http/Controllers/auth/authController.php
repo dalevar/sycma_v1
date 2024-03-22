@@ -43,7 +43,6 @@ class authController extends Controller
                 ]);
             }
 
-
             // Ambil semua data jadwal sholat dari database
             $dataSholatDatabase = JadwalSholat::all();
 

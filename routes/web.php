@@ -103,12 +103,15 @@ Route::get('guru/search', [GuruController::class, 'searchGuru'])->name('cari-gur
 // Siswa Route
 Route::get('/siswa/{id}', [SiswaController::class, 'getKelas'])->name('getKelas');
 Route::get('siswa', [SiswaController::class, 'index'])->name('siswa.index');
-Route::get('siswa/tambah', [SiswaController::class, 'tambahSiswa'])->name('siswa.create')->middleware('auth:admin');
 Route::post('siswa', [SiswaController::class, 'store'])->name('siswa.store')->middleware('auth:admin');
-
+Route::put('siswa/{siswa}', [SiswaController::class, 'update'])->name('siswa.update')->middleware('auth:admin');
+Route::delete('siswa/{siswa}', [SiswaController::class, 'destroy'])->name('siswa.destroy')->middleware('auth:admin');
 
 // Presensi Route
 Route::get('presensi', [PresensiController::class, 'index'])->name('presensi.index');
+Route::get('presensi-guru', [PresensiController::class, 'presensiGuru'])->name('presensi-guru.index');
+Route::delete('presensi/{presensi}', [PresensiController::class, 'destroy'])->name('presensi.destroy');
+
 // Rekap Presensi
 Route::get('rekap-presensi', [PresensiController::class, 'rekapPresensi'])->name('rekap-presensi.index');
 // Scan Kartu

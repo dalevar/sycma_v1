@@ -8,19 +8,21 @@ use App\Models\Status;
 use App\Models\Jurusan;
 use App\Models\JadwalSholat;
 use Illuminate\Http\Request;
+use App\Charts\PresensiChart;
 use App\Models\TemporaryRfid;
 use App\Models\PresensiSholat;
 use Illuminate\Support\Facades\Auth;
 
 class PresensiController extends Controller
 {
-    public function index()
+    public function index(PresensiChart $chart)
     {
         if (Auth::guard('admin')->check() == true) {
             $admin = Auth::guard('admin')->user();
             $sekolah = $admin->sekolah;
+            $tanggal = date('Y-m-d');
+            $presensi = PresensiSholat::where('sekolah_id', $sekolah->id)->where('tanggal', $tanggal)->get();
 
-            $presensi = PresensiSholat::where('sekolah_id', $sekolah->id)->get();
 
             $kelas = Kelas::where('sekolah_id', $sekolah->id)->get();
             if ($kelas->isEmpty()) {
@@ -32,7 +34,9 @@ class PresensiController extends Controller
                 $jurusan = "Isi data jurusan terlebih dahulu";
             }
 
-            return view('dashboard.pages.admin.presensi.presensi', compact('sekolah', 'presensi', 'kelas', 'jurusan'));
+            $chart = $chart->build();
+
+            return view('dashboard.pages.admin.presensi.presensi', compact('sekolah', 'presensi', 'kelas', 'jurusan', 'chart'));
         } elseif (Auth::guard('web')->check() == true) {
             $guru = Auth::guard('web')->user();
             $sekolah = $guru->sekolah;
@@ -141,5 +145,35 @@ class PresensiController extends Controller
 
 
         return view('dashboard.pages.admin.siswa.no_kartu', compact('sekolah', 'nokartu'));
+    }
+
+    public function destroy(Request $request, PresensiSholat $presensiSholat)
+    {
+        $admin = Auth::guard('admin')->user();
+        $sekolah = $admin->sekolah;
+        dd($presensiSholat->sekolah_id, $sekolah->id);
+
+        // Validasi no_kartu
+        $request->validate([
+            'no_kartu' => 'required',
+        ]);
+
+        // Periksa apakah presensiSholat sesuai dengan sekolah admin
+        if ($presensiSholat->sekolah_id != $sekolah->id) {
+            return redirect()->route('presensi.index')->with('error', 'Anda tidak memiliki akses untuk menghapus presensi siswa ini');
+        }
+
+        // Ambil nilai dari request yang telah divalidasi
+        $no_kartu = $request->input('no_kartu');
+
+        // Periksa apakah no_kartu cocok
+        if ($no_kartu != $presensiSholat->no_kartu) {
+            return redirect()->route('presensi.index')->with('error', 'Gagal menghapus presensi siswa. ID Kartu siswa tidak cocok dengan data siswa yang akan dihapus');
+        } elseif (empty($no_kartu)) {
+            return redirect()->route('presensi.index')->with('error', 'Gagal menghapus presensi siswa. Lengkapi ID Kartu siswa terlebih dahulu');
+        } else {
+            $presensiSholat->delete();
+            return redirect()->route('presensi.index')->with('delete', 'Presensi siswa berhasil dihapus');
+        }
     }
 }

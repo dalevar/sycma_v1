@@ -38,7 +38,7 @@
                             <tr>
                                 <th>No</th>
                                 <th>Nama Jurusan</th>
-                                <th width='11%'>Aksi</th>
+                                <th width='5%'>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
