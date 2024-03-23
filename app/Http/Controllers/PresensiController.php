@@ -56,9 +56,12 @@ class PresensiController extends Controller
             $sekolah = $admin->sekolah;
             $namaAdmin = $admin->name;
 
+            $bulan = date('m');
+            $tahun = date('Y');
+
             $presensi = PresensiSholat::where('sekolah_id', $sekolah->id)->get();
 
-            return view('dashboard.pages.admin.presensi.rekap-presensi', compact('sekolah', 'presensi', 'namaAdmin'));
+            return view('dashboard.pages.admin.presensi.rekap-presensi', compact('sekolah', 'presensi', 'namaAdmin', 'bulan', 'tahun'));
         } elseif (Auth::guard('web')->check() == true) {
             $guru = Auth::guard('web')->user();
             $sekolah = $guru->sekolah;

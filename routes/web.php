@@ -69,7 +69,6 @@ Route::middleware('auth:web')->group(function () {
     Route::get('guru', [GuruController::class, 'index'])->name('guru.index');
 });
 
-
 // Jurusan Route
 Route::get('jurusan', [JurusanController::class, 'index'])->name('jurusan.index')->middleware('auth:admin');
 Route::post('jurusan', [JurusanController::class, 'store'])->name('jurusan.store')->middleware('auth:admin');
@@ -107,6 +106,7 @@ Route::post('siswa', [SiswaController::class, 'store'])->name('siswa.store')->mi
 Route::put('siswa/{siswa}', [SiswaController::class, 'update'])->name('siswa.update')->middleware('auth:admin');
 Route::delete('siswa/{siswa}', [SiswaController::class, 'destroy'])->name('siswa.destroy')->middleware('auth:admin');
 
+/********** PRESENSI ADMIN ROUTE */
 // Presensi Route
 Route::get('presensi', [PresensiController::class, 'index'])->name('presensi.index');
 Route::get('presensi-guru', [PresensiController::class, 'presensiGuru'])->name('presensi-guru.index');
@@ -114,6 +114,7 @@ Route::delete('presensi/{presensi}', [PresensiController::class, 'destroy'])->na
 
 // Rekap Presensi
 Route::get('rekap-presensi', [PresensiController::class, 'rekapPresensi'])->name('rekap-presensi.index');
+
 // Scan Kartu
 Route::get('scan', [PresensiController::class, 'scanKartu'])->name('scan-kartu.index');
 // baca kartu
@@ -121,7 +122,12 @@ Route::get('baca-kartu', [PresensiController::class, 'bacaKartu'])->name('baca-k
 // NO KARTU
 Route::get('no-kartu', [PresensiController::class, 'noKartu'])->name('no-kartu.index')->middleware('auth:admin');
 
+// Profile Route
+Route::get('profile', [DashboardController::class, 'profileAdmin'])->name('profile.index');
+Route::put('profile/{admin}', [DashboardController::class, 'updateProfileAdmin'])->name('profile.update');
+Route::delete('profile/{admin}', [DashboardController::class, 'destroyProfileAdmin'])->name('profile.destroy');
 
+/****** BACKOFFICE ADMIN SYCMA ROUTE */
 // Tampilkan produk dan kategori
 Route::get('backoffice-sycma/produk', [\App\Http\Controllers\ProdukController::class, 'index'])->name('produk.index');
 Route::get('backoffice-sycma/category', [\App\Http\Controllers\CategoryController::class, 'index'])->name('category.index');
@@ -137,6 +143,7 @@ Route::put('backoffice-sycma/produk/{id}', [\App\Http\Controllers\ProdukControll
 Route::delete('backoffice-sycma/produk/{id}', [\App\Http\Controllers\ProdukController::class, 'destroy'])->name('produk.destroy');
 
 
+/****** LIBRARY ROUTE & RFID */
 // Oauth Google login Guru
 Route::get('/login/google', [\App\Http\Controllers\Auth\SocialiteController::class, 'redirectToGoogle'])->name('login.google');
 Route::get('/login/google/callback', [\App\Http\Controllers\Auth\SocialiteController::class, 'handleGoogleCallback']);
@@ -146,9 +153,3 @@ Route::get('presensi/kirimkartu/{nokartu}', [\App\Http\Controllers\rfid\RfidCard
 
 // Import Route
 Route::post('guru/import', [GuruController::class, 'import'])->name('guru.import');
-
-
-// Profile Route
-Route::get('profile', [DashboardController::class, 'profileAdmin'])->name('profile.index');
-Route::put('profile/{admin}', [DashboardController::class, 'updateProfileAdmin'])->name('profile.update');
-Route::delete('profile/{admin}', [DashboardController::class, 'destroyProfileAdmin'])->name('profile.destroy');

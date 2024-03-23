@@ -38,7 +38,7 @@
                     <table class="table table-bordered table-hover mb-0" id={{ $jurusan->isEmpty() ? '' : 'jurusanTable' }}>
                         <thead>
                             <tr>
-                                <th>No</th>
+                                <th width="2">No</th>
                                 <th>Nama Jurusan</th>
                                 <th width='5%'>Aksi</th>
                             </tr>
@@ -52,7 +52,7 @@
                             @else
                                 @foreach ($jurusan as $item)
                                     <tr>
-                                        <td>{{ $loop->iteration }}</td>
+                                        <td class="text-center">{{ $loop->iteration }}</td>
                                         <td>{{ $item->jurusan }}</td>
                                         <td>
                                             <button type="button" class="btn btn-warning btn-sm mb-2"

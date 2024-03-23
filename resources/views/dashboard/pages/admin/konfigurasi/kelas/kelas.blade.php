@@ -38,8 +38,8 @@
                     <table class="table table-bordered table-hover mb-0" id={{ $kelas->isEmpty() ? '' : 'kelasTables' }}>
                         <thead>
                             <tr>
-                                <th>No</th>
-                                <th>Kelas</th>
+                                <th width="2%">No</th>
+                                <th width="5%">Kelas</th>
                                 <th>Jurusan</th>
                                 <th width='5%'>Aksi</th>
                             </tr>
@@ -53,8 +53,8 @@
                             @else
                                 @foreach ($kelas as $item)
                                     <tr>
-                                        <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $item->kelas }}</td>
+                                        <td class="text-center">{{ $loop->iteration }}</td>
+                                        <td class="text-center">{{ $item->kelas }}</td>
                                         <td>{{ $item->jurusan->jurusan }}</td>
                                         <td>
                                             <button type="button" class="btn btn-warning btn-sm mb-2"
@@ -230,7 +230,7 @@
     <script>
         $(document).ready(function() {
             // Initialize DataTable with your table ID
-            $('#kelasTable').DataTable({
+            $('#kelasTables').DataTable({
                 language: {
                     url: '//cdn.datatables.net/plug-ins/2.0.3/i18n/id.json',
                     paginate: {
@@ -240,6 +240,7 @@
                         last: "»" // Double arrow right symbol
                     }
                 },
+                "searching": true, // Search Box
                 "paging": true, // Enable pagination
             });
         });
