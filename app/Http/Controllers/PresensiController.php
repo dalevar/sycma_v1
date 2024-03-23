@@ -71,26 +71,34 @@ class PresensiController extends Controller
 
     public function rekapPresensi()
     {
-        if (Auth::guard('admin')->check() == true) {
-            $admin = Auth::guard('admin')->user();
-            $sekolah = $admin->sekolah;
-            $namaAdmin = $admin->name;
+        $admin = Auth::guard('admin')->user();
+        $sekolah = $admin->sekolah;
+        $namaAdmin = $admin->name;
 
-            $bulan = date('m');
-            $tahun = date('Y');
+        $bulan = date('m');
+        $tahun = date('Y');
 
-            $presensi = PresensiSholat::where('sekolah_id', $sekolah->id)->get();
-            $siswa = Siswa::where('sekolah_id', $sekolah->id)->get();
-
+        $presensi = PresensiSholat::where('sekolah_id', $sekolah->id)->get();
+        $siswa = Siswa::where('sekolah_id', $sekolah->id)->get();
 
 
-            return view('dashboard.pages.admin.presensi.rekap-presensi', compact('sekolah', 'presensi', 'namaAdmin', 'bulan', 'tahun', 'siswa'));
-        } elseif (Auth::guard('web')->check() == true) {
-            $guru = Auth::guard('web')->user();
-            $sekolah = $guru->sekolah;
 
-            return view('dashboard.pages.guru.presensi.rekap-presensi', compact('sekolah'));
-        }
+        return view('dashboard.pages.admin.presensi.rekap-presensi', compact('sekolah', 'presensi', 'namaAdmin', 'bulan', 'tahun', 'siswa'));
+    }
+
+    public function rekapPresensiGuru()
+    {
+        $guru = Auth::guard('web')->user();
+        $sekolah = $guru->sekolah;
+        $namaGuru = $guru->name;
+
+        $bulan = date('m');
+        $tahun = date('Y');
+
+        $presensi = PresensiSholat::where('sekolah_id', $sekolah->id)->get();
+        $siswa = Siswa::where('sekolah_id', $sekolah->id)->get();
+
+        return view('dashboard.pages.guru.presensi.rekap-presensi', compact('sekolah', 'presensi', 'namaGuru', 'bulan', 'tahun', 'siswa', 'guru'));
     }
 
 
