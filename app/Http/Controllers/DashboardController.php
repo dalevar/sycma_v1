@@ -154,18 +154,17 @@ class DashboardController extends Controller
         return redirect()->back()->with('success', 'Profile berhasil diupdate');
     }
 
-    public function destroyProfileGuru(Request $request, \App\Models\User $user)
+    public function destroyProfileGuru(Request $request, \App\Models\Guru $guru)
     {
         $guru = Auth::guard('web')->user();
-
         $request->validate([
-            'name' => 'required',
+            'nama_lengkap' => 'required',
         ]);
 
-        if ($request->name == $guru->name) {
+        if ($request->nama_lengkap == $guru->nama_lengkap) {
             $guru->delete();
             return redirect()->route('logout');
-        } elseif ($request->name == null) {
+        } elseif ($request->nama_lengkap == null) {
             return redirect()->back()->with('error', 'Nama tidak boleh kosong');
         } else {
             return redirect()->back()->with('error', 'Nama tidak cocok');

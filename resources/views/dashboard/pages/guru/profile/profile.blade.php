@@ -106,7 +106,7 @@
                 <div class="modal-header">
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="{{ route('profile.destroy', $guru->id) }}" method="POST">
+                <form action="{{ route('profile-guru.destroy', $guru->id) }}" method="POST">
                     @csrf
                     @method('DELETE')
                     <div class="modal-body">
@@ -123,7 +123,7 @@
                             <div class="align-items-center text-left">
                                 <label for="nama_lengkap">Ketik :
                                     {{ $guru->nama_lengkap }}</label>
-                                <input type="text" id="name" class="form-control" name="name" />
+                                <input type="text" id="name" class="form-control" name="nama_lengkap" />
                             </div>
                         </div>
 
