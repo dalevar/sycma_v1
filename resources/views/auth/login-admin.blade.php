@@ -49,7 +49,6 @@
                                         <small class="text-danger invalid-feedback d-block">{{ $message }}</small>
                                     @enderror
                                 </div>
-
                             </div>
 
                             <div class="mb-3">
@@ -57,7 +56,7 @@
                             </div>
                         </form>
 
-                        <p class="text-center mt-2">
+                        <p class="text-left mt-2">
                             <span>Login sebagai guru ?</span>
                             <a href="{{ route('login') }}">
                                 <span>Masuk disini</span>
@@ -75,7 +74,7 @@
                             </div>
                         </div>
 
-                        <p class="text-center mt-2">
+                        <p class="text-left mt-2">
                             <span>Belum punya akun ?</span>
                             <a href="{{ route('register') }}">
                                 Daftar disini
