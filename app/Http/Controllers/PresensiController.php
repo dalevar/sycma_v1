@@ -60,14 +60,33 @@ class PresensiController extends Controller
             $tahun = date('Y');
 
             $presensi = PresensiSholat::where('sekolah_id', $sekolah->id)->get();
+            $siswa = Siswa::where('sekolah_id', $sekolah->id)->get();
 
-            return view('dashboard.pages.admin.presensi.rekap-presensi', compact('sekolah', 'presensi', 'namaAdmin', 'bulan', 'tahun'));
+
+
+            return view('dashboard.pages.admin.presensi.rekap-presensi', compact('sekolah', 'presensi', 'namaAdmin', 'bulan', 'tahun', 'siswa'));
         } elseif (Auth::guard('web')->check() == true) {
             $guru = Auth::guard('web')->user();
             $sekolah = $guru->sekolah;
 
             return view('dashboard.pages.guru.presensi.rekap-presensi', compact('sekolah'));
         }
+    }
+
+
+    public function rekapPresensiDetail(Siswa $siswa)
+    {
+        $admin = Auth::guard('admin')->user();
+        $sekolah = $admin->sekolah;
+        $namaAdmin = $admin->name;
+
+        $bulan = date('m');
+        $tahun = date('Y');
+
+        $presensi = PresensiSholat::where('sekolah_id', $sekolah->id)->where('siswa_id', $siswa->id)->get();
+
+
+        return view('dashboard.pages.admin.presensi.rekap-presensi-detail', compact('sekolah', 'presensi', 'namaAdmin', 'bulan', 'tahun', 'siswa'));
     }
 
     public function scanKartu()

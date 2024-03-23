@@ -84,7 +84,7 @@
         </li>
         <li class="menu-item {{ Request::is('profile*') ? 'active' : '' }}">
             <a href="{{ url('profile') }}" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-dock-top"></i>
+                <i class="menu-icon tf-icons bx bxs-user-detail"></i>
                 <div data-i18n="Basic">Pengaturan Akun</div>
             </a>
         </li>

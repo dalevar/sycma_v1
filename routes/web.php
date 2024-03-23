@@ -114,6 +114,8 @@ Route::delete('presensi/{presensi}', [PresensiController::class, 'destroy'])->na
 
 // Rekap Presensi
 Route::get('rekap-presensi', [PresensiController::class, 'rekapPresensi'])->name('rekap-presensi.index');
+// Rekap Presensi Detail Siswa
+Route::get('rekap-presensi/{siswa}', [PresensiController::class, 'rekapPresensiDetail'])->name('rekap-presensi-detail.index');
 
 // Scan Kartu
 Route::get('scan', [PresensiController::class, 'scanKartu'])->name('scan-kartu.index');

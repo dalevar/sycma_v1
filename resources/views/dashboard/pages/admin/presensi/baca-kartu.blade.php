@@ -32,9 +32,9 @@
     
         // Cek apakah sudah masuk waktu sholat
         if ($jam == $waktu_bersiap) {
-            $status = 'Tepat Waktu';
+            $status = 'Sholat Tepat Waktu';
         } elseif ($jam >= $waktu_bersiap && $jam <= $waktu_selesai) {
-            $status = 'Tepat Waktu';
+            $status = 'Sholat Tepat Waktu';
         } elseif ($jam >= $waktu_selesai) {
             $status = 'Sholat';
         } else {

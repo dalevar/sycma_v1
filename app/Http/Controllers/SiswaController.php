@@ -22,8 +22,6 @@ class SiswaController extends Controller
             $jurusan = $sekolah->jurusan;
             $kelas = $sekolah->kelas;
 
-
-
             $kelasArray = [];
             foreach ($kelas as $k) {
                 $kelasArray[$k->id] = $k->kelas;

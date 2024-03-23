@@ -74,8 +74,8 @@
                                         <td>{{ $p->jenis_sholat }}</td>
                                         <td>{{ $p->jam_sholat }}</td>
                                         <td>
-                                            @if ($p->status == 'Tepat Waktu')
-                                                <span class="badge bg-label-success">Tepat Waktu</span>
+                                            @if ($p->status == 'Sholat Tepat Waktu')
+                                                <span class="badge bg-label-success">Sholat Tepat Waktu</span>
                                             @elseif ($p->status == 'Sholat')
                                                 <span class="badge bg-label-warning">Sholat</span>
                                             @endif
