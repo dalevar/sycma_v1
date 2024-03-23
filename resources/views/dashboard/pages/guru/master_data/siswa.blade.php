@@ -3,108 +3,72 @@
 @section('content')
     <div class="container-xxl flex-grow-1 container-p-y">
         <div class="row">
-            <div class="card mb-2" style="background: #fbfbfb">
-                <h4 class="font-weight-bold py-3 mb-0 card-header text-dark">Siswa</h4>
-                <div class="col-lg-12 mb-2 order-0">
-                    <div class="row">
-                        <div class="col-lg-4 col-md-6 col-6 mb-4">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="card-title d-flex align-items-start justify-content-between">
-                                        <span class="fw-semibold d-block">Total Data Siswa</span>
-                                        <div class="avatar flex-shrink-0">
-                                            <img src="{{ asset('backoffice/assets/img/icons/unicons/chart-success.png') }}"
-                                                alt="chart success" class="rounded">
-                                        </div>
+
+            <h4 class="font-weight-bold py-3 mb-0 card-header text-dark">Siswa {{ $sekolah->nama_sekolah }}</h4>
+            <div class="col-lg-12 mb-2 order-0">
+                <div class="row">
+                    <div class="col-lg-4 col-md-6 col-6 mb-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="card-title d-flex align-items-start justify-content-between">
+                                    <span class="fw-semibold d-block">Total Data Siswa</span>
+                                    <div class="avatar flex-shrink-0">
+                                        <img src="{{ asset('backoffice/assets/img/icons/unicons/chart-success.png') }}"
+                                            alt="chart success" class="rounded">
                                     </div>
-                                    <div class="d-flex">
-                                        <h3 class="card-title mb-2 me-2">215</h3>
-                                        <small class="text-secondary fw-light text-middle mt-2">
-                                            Siswa</small>
-                                    </div>
+                                </div>
+                                <div class="d-flex">
+                                    <h3 class="card-title mb-2 me-2">{{ $totalDataSiswa }}</h3>
+                                    <small class="text-secondary fw-light text-middle mt-2">
+                                        Siswa</small>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-4 col-md-6 col-6 mb-4">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="card-title d-flex align-items-start justify-content-between">
-                                        <span class="fw-semibold d-block">Total Siswa Laki-Laki</span>
-                                        <div class="avatar flex-shrink-0">
-                                            <img src="{{ asset('backoffice/assets/img/icons/unicons/chart-success.png') }}"
-                                                alt="chart success" class="rounded">
-                                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-6 mb-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="card-title d-flex align-items-start justify-content-between">
+                                    <span class="fw-semibold d-block">Total Siswa Laki-Laki</span>
+                                    <div class="avatar flex-shrink-0">
+                                        <img src="{{ asset('backoffice/assets/img/icons/unicons/chart-success.png') }}"
+                                            alt="chart success" class="rounded">
                                     </div>
-                                    <div class="d-flex">
-                                        <h3 class="card-title mb-2 me-2">215</h3>
-                                        <small class="text-secondary fw-light text-middle mt-2">
-                                            Siswa</small>
-                                    </div>
+                                </div>
+                                <div class="d-flex">
+                                    <h3 class="card-title mb-2 me-2">{{ $totalDataSiswaLaki }}</h3>
+                                    <small class="text-secondary fw-light text-middle mt-2">
+                                        Siswa</small>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-4 col-md-6 col-6 mb-4">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="card-title d-flex align-items-start justify-content-between">
-                                        <span class="fw-semibold d-block">Total Siswa Perempuan</span>
-                                        <div class="avatar flex-shrink-0">
-                                            <img src="{{ asset('backoffice/assets/img/icons/unicons/chart-success.png') }}"
-                                                alt="chart success" class="rounded">
-                                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-6 mb-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="card-title d-flex align-items-start justify-content-between">
+                                    <span class="fw-semibold d-block">Total Siswa Perempuan</span>
+                                    <div class="avatar flex-shrink-0">
+                                        <img src="{{ asset('backoffice/assets/img/icons/unicons/chart-success.png') }}"
+                                            alt="chart success" class="rounded">
                                     </div>
-                                    <div class="d-flex">
-                                        <h3 class="card-title mb-2 me-2">215</h3>
-                                        <small class="text-secondary fw-light text-middle mt-2">
-                                            Siswa</small>
-                                    </div>
+                                </div>
+                                <div class="d-flex">
+                                    <h3 class="card-title mb-2 me-2">{{ $totalDataSiswaPerempuan }}</h3>
+                                    <small class="text-secondary fw-light text-middle mt-2">
+                                        Siswa</small>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+
             <div class="card mb-4">
                 <h6 class="card-header fw-bold">Data Siswa</h6>
                 <div class="card-body">
-                    <div class="d-flex justify-content-between mb-3">
-                        <div class="col-md-6">
-                            <div class="nav-item d-flex align-items-center form-control">
-                                <i class="bx bx-search fs-4 lh-0"></i>
-                                <input type="text" class="form-control border-0 shadow-none" placeholder="Search..."
-                                    aria-label="Nama Siswa">
-                            </div>
-                        </div>
-                        <div class="col-md-6 text-end">
-                            <button type="button" class="btn btn-primary " data-bs-toggle="modal"
-                                data-bs-target="#tambahModal">
-                                <i class="bx bx-plus"></i> Siswa
-                            </button>
-                        </div>
-                    </div>
-                    @if (session('success'))
-                        <div class="alert alert-success alert-dismissible fade show" role="alert">
-                            <strong>Sukses! Data berhasil ditambahkan</strong> {{ session('status') }}
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        </div>
-                    @elseif (session('update'))
-                        <div class="alert alert-success alert-dismissible fade show" role="alert">
-                            <strong>Sukses! Data berhasil diupdate</strong> {{ session('status') }}
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        </div>
-                    @elseif (session('delete'))
-                        <div class="alert alert-success alert-dismissible fade show" role="alert">
-                            <strong>Sukses! Data berhasil dihapus</strong> {{ session('status') }}
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        </div>
-                    @elseif(session('error'))
-                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                            <strong>Gagal!</strong> {{ session('error') }}
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        </div>
-                    @endif
                     <div class="table-responsive">
-                        <table class="table table-bordered table-hover mb-0">
+                        <table class="table table-bordered table-hover mb-0" id={{ $siswa->isEmpty() ? '' : 'siswaTable' }}>
                             <thead>
                                 <tr>
                                     <th>ID Kartu</th>
@@ -114,29 +78,34 @@
                                     <th>Jenis Kelamin</th>
                                     <th>No. HP (Orang Tua)</th>
                                     <th>NIS</th>
-                                    <th width='11%'>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>John Dale</td>
-                                    <td>XII</td>
-                                    <td>RPL</td>
-                                    <td>Laki-Laki</td>
-                                    <td>081234567890</td>
-                                    <td>1234567890</td>
-                                    <td>
-                                        <button type="button" class="btn btn-warning btn-sm mb-2" data-bs-toggle="modal"
-                                            data-bs-target="#editModal_">
-                                            <i class="bx bx-edit"></i>
-                                        </button>
-                                        <button type="button" class="btn btn-danger btn-sm mb-2" data-bs-toggle="modal"
-                                            data-bs-target="#hapusModal_">
-                                            <i class="bx bx-trash"></i>
-                                        </button>
-                                    </td>
-                                </tr>
+                                @if ($siswa->isEmpty())
+                                    <tr>
+                                        <td colspan="8" class="h3 text-muted text-center">Data Siswa Kosong, Tambahkan
+                                            Data!</td>
+                                    </tr>
+                                @else
+                                    @foreach ($siswa as $s)
+                                        <tr>
+                                            <td>{{ $s->no_kartu }}</td>
+                                            <td>{{ $s->nama_lengkap }}</td>
+                                            <td>{{ $s->kelas->kelas }}</td>
+                                            <td>{{ $s->jurusan->jurusan }}</td>
+                                            <td>
+                                                @if ($s->jenis_kelamin == 'L')
+                                                    Laki-Laki
+                                                @else
+                                                    Perempuan
+                                                @endif
+                                            </td>
+
+                                            <td>{{ $s->no_hp }}</td>
+                                            <td>{{ $s->nis }}</td>
+                                        </tr>
+                                    @endforeach
+                                @endif
                             </tbody>
                         </table>
                     </div>
@@ -282,6 +251,24 @@
 
                 // Show only options related to the selected jurusan
                 $('.kelas-option[data-jurusan="' + selectedJurusan + '"]').show();
+            });
+        });
+
+
+        $(document).ready(function() {
+            // Initialize DataTable with your table ID
+            $('#siswaTable').DataTable({
+                language: {
+                    url: '//cdn.datatables.net/plug-ins/2.0.3/i18n/id.json',
+                    paginate: {
+                        previous: "‹", // Arrow left symbol
+                        next: "›", // Arrow right symbol
+                        first: "«", // Double arrow left symbol
+                        last: "»" // Double arrow right symbol
+                    }
+                },
+                "paging": true, // Enable pagination
+                "searching": true, // Enable search/filtering
             });
         });
     </script>

@@ -12,52 +12,58 @@ class SiswaController extends Controller
 {
     public function index()
     {
-        if (Auth::guard('admin')->check() == true) {
-            $admin = Auth::guard('admin')->user();
-            $sekolah = $admin->sekolah;
-            $namaAdmin = $admin->name;
 
-            $siswa = Siswa::where('sekolah_id', $sekolah->id)->get();
+        $admin = Auth::guard('admin')->user();
+        $sekolah = $admin->sekolah;
+        $namaAdmin = $admin->name;
 
-            $jurusan = $sekolah->jurusan;
-            $kelas = $sekolah->kelas;
+        $siswa = Siswa::where('sekolah_id', $sekolah->id)->get();
 
-            $kelasArray = [];
-            foreach ($kelas as $k) {
-                $kelasArray[$k->id] = $k->kelas;
-            }
+        $jurusan = $sekolah->jurusan;
+        $kelas = $sekolah->kelas;
 
-            // Ambil data dari tabel temporary_rfid
-            $temporaryRfid = TemporaryRfid::first(); // Mengambil hanya satu baris data pertama
-
-            // Tampilkan no_kartu
-            if ($temporaryRfid) {
-                $nokartu = $temporaryRfid->no_kartu;
-            } else {
-                $nokartu = 'Tempelkan Kartu';
-            }
-
-            $totalDataSiswa = Siswa::where('sekolah_id', $sekolah->id)->count();
-            $totalDataSiswaLaki = Siswa::where('sekolah_id', $sekolah->id)->where('jenis_kelamin', 'L')->count();
-            $totalDataSiswaPerempuan = Siswa::where('sekolah_id', $sekolah->id)->where('jenis_kelamin', 'P')->count();
-
-            return view('dashboard.pages.admin.siswa.siswa', compact('admin', 'sekolah', 'jurusan', 'kelasArray', 'kelas', 'nokartu', 'siswa', 'totalDataSiswa', 'totalDataSiswaLaki', 'totalDataSiswaPerempuan', 'namaAdmin'));
-        } elseif (Auth::guard('web')->check() == true) {
-            $guru = Auth::guard('web')->user();
-            $sekolah = $guru->sekolah;
-
-            $jurusan = $sekolah->jurusan;
-            $kelas = $sekolah->kelas;
-
-            $kelasArray = [];
-            foreach ($kelas as $k) {
-                $kelasArray[$k->id] = $k->kelas;
-            }
-
-            return view('dashboard.pages.guru.master_data.siswa', compact('guru', 'sekolah', 'jurusan', 'kelasArray', 'kelas'));
-        } else {
-            return redirect()->route('login');
+        $kelasArray = [];
+        foreach ($kelas as $k) {
+            $kelasArray[$k->id] = $k->kelas;
         }
+
+        // Ambil data dari tabel temporary_rfid
+        $temporaryRfid = TemporaryRfid::first(); // Mengambil hanya satu baris data pertama
+
+        // Tampilkan no_kartu
+        if ($temporaryRfid) {
+            $nokartu = $temporaryRfid->no_kartu;
+        } else {
+            $nokartu = 'Tempelkan Kartu';
+        }
+
+        $totalDataSiswa = Siswa::where('sekolah_id', $sekolah->id)->count();
+        $totalDataSiswaLaki = Siswa::where('sekolah_id', $sekolah->id)->where('jenis_kelamin', 'L')->count();
+        $totalDataSiswaPerempuan = Siswa::where('sekolah_id', $sekolah->id)->where('jenis_kelamin', 'P')->count();
+
+        return view('dashboard.pages.admin.siswa.siswa', compact('admin', 'sekolah', 'jurusan', 'kelasArray', 'kelas', 'nokartu', 'siswa', 'totalDataSiswa', 'totalDataSiswaLaki', 'totalDataSiswaPerempuan', 'namaAdmin'));
+    }
+
+    public function indexGuru()
+    {
+        $guru = Auth::guard('web')->user();
+        $sekolah = $guru->sekolah;
+
+        $siswa = Siswa::where('sekolah_id', $sekolah->id)->get();
+
+        $jurusan = $sekolah->jurusan;
+        $kelas = $sekolah->kelas;
+
+        $kelasArray = [];
+        foreach ($kelas as $k) {
+            $kelasArray[$k->id] = $k->kelas;
+        }
+
+        $totalDataSiswa = Siswa::where('sekolah_id', $sekolah->id)->count();
+        $totalDataSiswaLaki = Siswa::where('sekolah_id', $sekolah->id)->where('jenis_kelamin', 'L')->count();
+        $totalDataSiswaPerempuan = Siswa::where('sekolah_id', $sekolah->id)->where('jenis_kelamin', 'P')->count();
+
+        return view('dashboard.pages.guru.master_data.siswa', compact('guru', 'sekolah', 'jurusan', 'kelasArray', 'kelas', 'siswa', 'totalDataSiswa', 'totalDataSiswaLaki', 'totalDataSiswaPerempuan'));
     }
 
     public function getKelas($id)

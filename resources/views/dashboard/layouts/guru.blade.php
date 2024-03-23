@@ -64,7 +64,7 @@
             <div class="layout-page">
 
                 <!-- Navbar -->
-                @include('dashboard.partials.navbar')
+                @include('dashboard.partials.navbar-guru')
                 <!-- / Navbar -->
 
                 <!-- Content wrapper -->

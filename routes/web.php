@@ -92,13 +92,6 @@ Route::put('guru/{guru}', [GuruController::class, 'update'])->name('guru.update'
 Route::delete('guru/{guru}', [GuruController::class, 'destroy'])->name('guru.destroy');
 Route::get('guru/search', [GuruController::class, 'searchGuru'])->name('cari-guru');
 
-
-// Route::middleware(['auth', 'can:admin,guru'])->group(function () {
-//     Route::get('guru', [GuruController::class, 'index'])->name('guru.index');
-//     Route::post('guru', [GuruController::class, 'store'])->name('guru.store');
-//     Route::put('guru/{guru}', [GuruController::class, 'update'])->name('guru.update');
-// });
-
 // Siswa Route
 Route::get('/siswa/{id}', [SiswaController::class, 'getKelas'])->name('getKelas');
 Route::get('siswa', [SiswaController::class, 'index'])->name('siswa.index');
@@ -108,8 +101,7 @@ Route::delete('siswa/{siswa}', [SiswaController::class, 'destroy'])->name('siswa
 
 /********** PRESENSI ADMIN ROUTE */
 // Presensi Route
-Route::get('presensi', [PresensiController::class, 'index'])->name('presensi.index');
-Route::get('presensi-guru', [PresensiController::class, 'presensiGuru'])->name('presensi-guru.index');
+Route::get('presensi', [PresensiController::class, 'index'])->name('presensi.index')->middleware('auth:admin');
 Route::delete('presensi/{presensi}', [PresensiController::class, 'destroy'])->name('presensi.destroy');
 
 // Rekap Presensi
@@ -128,6 +120,22 @@ Route::get('no-kartu', [PresensiController::class, 'noKartu'])->name('no-kartu.i
 Route::get('profile', [DashboardController::class, 'profileAdmin'])->name('profile.index');
 Route::put('profile/{admin}', [DashboardController::class, 'updateProfileAdmin'])->name('profile.update');
 Route::delete('profile/{admin}', [DashboardController::class, 'destroyProfileAdmin'])->name('profile.destroy');
+/********** GURU ROUTE */
+// PRESENSI GURU ROUTE
+Route::get('presensi-guru', [PresensiController::class, 'presensiGuru'])->name('presensi-guru.index');
+
+// REKAP PRESENSI GURU ROUTE
+Route::get('rekap-presensi-guru', [PresensiController::class, 'rekapPresensiGuru'])->name('rekap-presensi-guru.index');
+
+// SISWA GURU ROUTE
+Route::get('siswa-guru', [SiswaController::class, 'indexGuru'])->name('siswa-guru.index');
+// GURU GURU ROUTE
+Route::get('guru-guru', [GuruController::class, 'indexGuru'])->name('guru-guru.index');
+
+// Profile Guru Route
+Route::get('profile-guru', [DashboardController::class, 'profileGuru'])->name('profile-guru.index');
+Route::put('profile-guru/{guru}', [DashboardController::class, 'updateProfileGuru'])->name('profile-guru.update');
+Route::delete('profile-guru/{guru}', [DashboardController::class, 'destroyProfileGuru'])->name('profile-guru.destroy');
 
 /****** BACKOFFICE ADMIN SYCMA ROUTE */
 // Tampilkan produk dan kategori

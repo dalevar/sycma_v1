@@ -17,36 +17,56 @@ class PresensiController extends Controller
 {
     public function index(PresensiChart $chart)
     {
-        if (Auth::guard('admin')->check() == true) {
-            $admin = Auth::guard('admin')->user();
-            $sekolah = $admin->sekolah;
-            $namaAdmin = $admin->name;
+        $admin = Auth::guard('admin')->user();
+        $sekolah = $admin->sekolah;
+        $namaAdmin = $admin->name;
 
-            $tanggal = date('Y-m-d');
-            $presensi = PresensiSholat::where('sekolah_id', $sekolah->id)->where('tanggal', $tanggal)->get();
-            $totalDataSiswa = $sekolah->siswa->count();
-            $totalSiswaLaki = $sekolah->siswa->where('jenis_kelamin', 'L')->count();
-            $totalSiswaPerempuan = $sekolah->siswa->where('jenis_kelamin', 'P')->count();
+        $tanggal = date('Y-m-d');
+        $presensi = PresensiSholat::where('sekolah_id', $sekolah->id)->where('tanggal', $tanggal)->get();
+        $totalDataSiswa = $sekolah->siswa->count();
+        $totalSiswaLaki = $sekolah->siswa->where('jenis_kelamin', 'L')->count();
+        $totalSiswaPerempuan = $sekolah->siswa->where('jenis_kelamin', 'P')->count();
 
-            $kelas = Kelas::where('sekolah_id', $sekolah->id)->get();
-            if ($kelas->isEmpty()) {
-                $kelas = "Isi data kelas terlebih dahulu";
-            }
-
-            $jurusan = Jurusan::where('sekolah_id', $sekolah->id)->get();
-            if ($jurusan->isEmpty()) {
-                $jurusan = "Isi data jurusan terlebih dahulu";
-            }
-
-            $chart = $chart->build();
-
-            return view('dashboard.pages.admin.presensi.presensi', compact('sekolah', 'presensi', 'kelas', 'jurusan', 'chart', 'namaAdmin', 'totalDataSiswa', 'totalSiswaLaki', 'totalSiswaPerempuan'));
-        } elseif (Auth::guard('web')->check() == true) {
-            $guru = Auth::guard('web')->user();
-            $sekolah = $guru->sekolah;
-
-            return view('dashboard.pages.guru.presensi.presensi', compact('sekolah'));
+        $kelas = Kelas::where('sekolah_id', $sekolah->id)->get();
+        if ($kelas->isEmpty()) {
+            $kelas = "Isi data kelas terlebih dahulu";
         }
+
+        $jurusan = Jurusan::where('sekolah_id', $sekolah->id)->get();
+        if ($jurusan->isEmpty()) {
+            $jurusan = "Isi data jurusan terlebih dahulu";
+        }
+
+        $chart = $chart->build();
+
+        return view('dashboard.pages.admin.presensi.presensi', compact('sekolah', 'presensi', 'kelas', 'jurusan', 'chart', 'namaAdmin', 'totalDataSiswa', 'totalSiswaLaki', 'totalSiswaPerempuan'));
+    }
+
+    public function presensiGuru(PresensiChart $chart)
+    {
+        $guru = Auth::guard('web')->user();
+        $sekolah = $guru->sekolah;
+        $namaGuru = $guru->name;
+
+        $tanggal = date('Y-m-d');
+        $presensi = PresensiSholat::where('sekolah_id', $sekolah->id)->where('tanggal', $tanggal)->get();
+        $totalDataSiswa = $sekolah->siswa->count();
+        $totalSiswaLaki = $sekolah->siswa->where('jenis_kelamin', 'L')->count();
+        $totalSiswaPerempuan = $sekolah->siswa->where('jenis_kelamin', 'P')->count();
+
+        $kelas = Kelas::where('sekolah_id', $sekolah->id)->get();
+        if ($kelas->isEmpty()) {
+            $kelas = "Isi data kelas terlebih dahulu";
+        }
+
+        $jurusan = Jurusan::where('sekolah_id', $sekolah->id)->get();
+        if ($jurusan->isEmpty()) {
+            $jurusan = "Isi data jurusan terlebih dahulu";
+        }
+
+        $chart = $chart->build();
+
+        return view('dashboard.pages.guru.presensi.presensi', compact('sekolah', 'presensi', 'kelas', 'jurusan', 'chart', 'namaGuru', 'totalDataSiswa', 'totalSiswaLaki', 'totalSiswaPerempuan', 'guru'));
     }
 
     public function rekapPresensi()

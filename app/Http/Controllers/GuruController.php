@@ -18,7 +18,7 @@ class GuruController extends Controller
             $sekolah = $admin->sekolah;
             $namaAdmin = $admin->name;
 
-            $guru = Guru::where('sekolah_id', $sekolah->id)->paginate(15);
+            $guru = Guru::where('sekolah_id', $sekolah->id)->get();
             $totalGuru = Guru::where('sekolah_id', $sekolah->id)->count();
             $totalGuruLaki = Guru::where('sekolah_id', $sekolah->id)->where('jenis_kelamin', 'L')->count();
             $totalGuruPerempuan = Guru::where('sekolah_id', $sekolah->id)->where('jenis_kelamin', 'P')->count();
@@ -35,6 +35,20 @@ class GuruController extends Controller
 
             return view('dashboard.pages.guru.master_data.guru', compact('sekolah', 'guru', 'totalGuru', 'totalGuruLaki', 'totalGuruPerempuan'));
         }
+    }
+
+    public function indexGuru()
+    {
+        $guru = Auth::guard('web')->user();
+        $sekolah = $guru->sekolah;
+        $namaGuru = $guru->name;
+
+        $dataGuru = Guru::where('sekolah_id', $sekolah->id)->get();
+        $totalGuru = Guru::where('sekolah_id', $sekolah->id)->count();
+        $totalGuruLaki = Guru::where('sekolah_id', $sekolah->id)->where('jenis_kelamin', 'L')->count();
+        $totalGuruPerempuan = Guru::where('sekolah_id', $sekolah->id)->where('jenis_kelamin', 'P')->count();
+
+        return view('dashboard.pages.guru.master_data.guru', compact('sekolah', 'guru', 'totalGuru', 'totalGuruLaki', 'totalGuruPerempuan', 'namaGuru', 'dataGuru'));
     }
 
     public function store(Request $request)
