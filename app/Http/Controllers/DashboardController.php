@@ -118,4 +118,57 @@ class DashboardController extends Controller
             return redirect()->back()->with('error', 'Nama tidak cocok');
         }
     }
+
+    public function profileGuru()
+    {
+        $guru = Auth::guard('web')->user();
+        $sekolah = $guru->sekolah;
+
+        return view('dashboard.pages.guru.profile.profile', compact('guru', 'sekolah'));
+    }
+
+    public function updateProfileGuru(Request $request)
+    {
+        $guru = Auth::guard('web')->user();
+        $sekolah = $guru->sekolah;
+
+        $request->validate([
+            'sekolah_id' => 'required',
+            'nama_lengkap' => 'required|min:5',
+            'email' => 'required|email',
+        ]);
+        // dd($request->all());
+
+        if ($request->all() == null) {
+            return redirect()->back()->with('error', 'Data tidak boleh kosong');
+        } elseif ($request->nama_lengkap == $guru->nama_lengkap && $request->email == $guru->email) {
+            return redirect()->back()->with('error', 'Data tidak ada yang berubah');
+        }
+
+        $guru->update([
+            'sekolah_id' => $request->sekolah_id,
+            'nama_lengkap' => $request->nama_lengkap,
+            'email' => $request->email,
+        ]);
+
+        return redirect()->back()->with('success', 'Profile berhasil diupdate');
+    }
+
+    public function destroyProfileGuru(Request $request, \App\Models\User $user)
+    {
+        $guru = Auth::guard('web')->user();
+
+        $request->validate([
+            'name' => 'required',
+        ]);
+
+        if ($request->name == $guru->name) {
+            $guru->delete();
+            return redirect()->route('logout');
+        } elseif ($request->name == null) {
+            return redirect()->back()->with('error', 'Nama tidak boleh kosong');
+        } else {
+            return redirect()->back()->with('error', 'Nama tidak cocok');
+        }
+    }
 }

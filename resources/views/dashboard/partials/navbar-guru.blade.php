@@ -54,7 +54,7 @@
                         <div class="dropdown-divider"></div>
                     </li>
                     <li>
-                        <a class="dropdown-item" href="{{ route('profile.index') }}">
+                        <a class="dropdown-item" href="{{ route('profile-guru.index') }}">
                             <i class="bx bx-user me-2"></i>
                             <span class="align-middle">Profil</span>
                         </a>

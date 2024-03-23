@@ -63,6 +63,7 @@
                                 <th width="5%">Kelas</th>
                                 <th>Jurusan</th>
                                 <th width="16%">Total Sholat Dzuhur</th>
+                                <th width="2%">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -96,6 +97,12 @@
                                     <td class="text-center">{{ $siswa->kelas->kelas }}</td>
                                     <td>{{ $siswa->jurusan->jurusan }}</td>
                                     <td>{{ $jumlahPresensi }}</td>
+                                    <td class="text-center">
+                                        <a href="{{ route('rekap-presensi-detail-guru.index', ['siswa' => $siswa->id, 'bulan' => $bulan, 'tahun' => $tahun]) }}"
+                                            class="btn btn-info btn-sm mb-2">
+                                            <i class="bx bx-show"></i>
+                                        </a>
+                                    </td>
                                 </tr>
                             @endforeach
 

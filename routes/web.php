@@ -126,6 +126,7 @@ Route::get('presensi-guru', [PresensiController::class, 'presensiGuru'])->name('
 
 // REKAP PRESENSI GURU ROUTE
 Route::get('rekap-presensi-guru', [PresensiController::class, 'rekapPresensiGuru'])->name('rekap-presensi-guru.index');
+Route::get('rekap-presensi-guru/{siswa}', [PresensiController::class, 'rekapPresensiDetailGuru'])->name('rekap-presensi-detail-guru.index');
 
 // SISWA GURU ROUTE
 Route::get('siswa-guru', [SiswaController::class, 'indexGuru'])->name('siswa-guru.index');
