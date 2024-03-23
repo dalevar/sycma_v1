@@ -23,6 +23,7 @@
                     <a class="nav-link{{ Request::is('harga') ? ' active' : '' }}" href="{{ url('harga') }}">Harga</a>
                 </li>
                 <li><a class="nav-link scrollto" href="{{ url('/#contact') }}">Hubungi Kami</a></li>
+                <li><a class="nav-link scrollto" href="{{ url('/#faq') }}">FAQ</a></li>
                 <li><a class="getstarted scrollto" href="{{ route('register') }}">Coba Demo</a></li>
                 <li><a class="nav-link scrollto" href="{{ route('login') }}">Masuk</a></li>
             </ul>

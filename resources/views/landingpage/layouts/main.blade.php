@@ -37,8 +37,6 @@
     @include('landingpage.partials.header')
     <!-- End Header -->
 
-
-
     <!-- ======= Main Section ======= -->
     <main id="main">
         @yield('main')

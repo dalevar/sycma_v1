@@ -6,18 +6,6 @@
         <div class="card mb-4">
             <div class="card-header align-content-end align-items-end">
                 <h6 class="fw-bold">Data Presensi Sholat</h6>
-                <div class="d-flex justify-content-between">
-                    {{-- <div class="col-md-4">
-                        <div class="nav-item d-flex align-items-center form-control">
-                            <i class="bx bx-search fs-4 lh-0"></i>
-                            <input type="text" class="form-control border-0 shadow-none" placeholder="Search..."
-                                aria-label="Nama Siswa">
-                        </div>
-                    </div> --}}
-                    {{-- <div class="col-md-2">
-                        <input class="form-control" type="date" value="2021-06-18" id="html5-date-input">
-                    </div> --}}
-                </div>
             </div>
 
             <div class="card-body">
@@ -55,7 +43,7 @@
                                 <th>Jenis Sholat</th>
                                 <th>Jam Sholat</th>
                                 <th>Status</th>
-                                <th width='11%'>Aksi</th>
+                                <th width='2%'>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -84,10 +72,6 @@
                                             <button type="button" class="btn btn-info btn-sm mb-2" data-bs-toggle="modal"
                                                 data-bs-target="#detailModal_{{ $loop->index + 1 }}">
                                                 <i class="bx bx-show"></i>
-                                            </button>
-                                            <button type="button" class="btn btn-danger btn-sm mb-2" data-bs-toggle="modal"
-                                                data-bs-target="#hapusModal_{{ $loop->index + 1 }}">
-                                                <i class="bx bx-trash"></i>
                                             </button>
                                         </td>
                                     </tr>
@@ -186,8 +170,8 @@
                                 <div class="d-flex justify-content-between mb-4">
                                     <div class="d-flex align-items-center" style="padding-top: 2em;">
                                         <div class="avatar avatar-sm me-2">
-                                            <img src="backoffice/assets/img/icons/unicons/laki-avatar.png"
-                                                alt="Graduation" class="rounded" />
+                                            <img src="backoffice/assets/img/icons/unicons/laki-avatar.png" alt="Graduation"
+                                                class="rounded" />
                                         </div>
                                         <div>
                                             <h6 class="mb-0">Total Siswa Laki-Laki</h6>

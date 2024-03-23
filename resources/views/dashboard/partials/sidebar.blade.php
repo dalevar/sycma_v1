@@ -2,7 +2,7 @@
     <div class="app-brand demo">
         <a href="#" class="app-brand-link">
             <span class="app-brand-icon demo">
-                <img src="{{ asset('storage/' . $sekolah->logo_sekolah) }}" alt="Brand Logo" class="img-fluid">
+                <img src="{{ asset('/storage/' . $sekolah->logo_sekolah) }}" alt="Brand Logo" class="img-fluid">
             </span>
         </a>
 

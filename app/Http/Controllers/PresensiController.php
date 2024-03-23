@@ -118,6 +118,8 @@ class PresensiController extends Controller
             ->whereYear('created_at', $tahun)
             ->get();
 
+        // dd($presensi);
+
         $jumlahPresensiPerTanggal = [];
         foreach ($tanggalBulanFormat as $tanggal) {
             // Periksa apakah tanggal tersebut bukan hari Jumat, Sabtu, atau Minggu
@@ -131,13 +133,14 @@ class PresensiController extends Controller
                 $jumlahPresensiPerTanggal[$tanggal] = 0;
             }
         }
-
+        // dd($jumlahPresensiPerTanggal);
 
         $dataGrafik = [];
         foreach ($tanggalBulanFormat as $tanggal) {
             $dataGrafik[] = $jumlahPresensiPerTanggal[$tanggal];
         }
-        $dataGrafik = array_map('intval', $dataGrafik); // Konversi semua nilai menjadi bilangan bulat
+        // dd($dataGrafik);
+        // $dataGrafik = array_map('intval', $dataGrafik); // Konversi semua nilai menjadi bilangan bulat
 
         // Ambil bulan dan tahun dalam format teks untuk digunakan pada judul grafik
         $namaBulan = $bulanIndonesia[intval($bulan)];

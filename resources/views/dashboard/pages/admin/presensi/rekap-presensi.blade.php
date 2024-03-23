@@ -132,6 +132,7 @@
                 <div class="card">
                     <div class="card-header">
                         <h6 class="card-title">Grafik Presensi Sholat</h6>
+                        <p class="text-muted">Presensi : Senin - Kamis</p>
                     </div>
                     <div class="card-body">
                         <div id="chart-presensi"></div>
@@ -196,7 +197,7 @@
         var options = {
             series: [{
                 name: "Presensi Sholat",
-                data: <?php echo json_encode(array_map('intval', $dataGrafik)); ?>
+                data: <?php echo json_encode($dataGrafik); ?>
             }],
             chart: {
                 height: 350,
@@ -228,11 +229,11 @@
                 title: {
                     text: 'Jumlah Presensi'
                 },
-                labels: {
-                    formatter: function(val) {
-                        return parseInt(val).toFixed(0);
-                    }
-                }
+                // labels: {
+                //     formatter: function(val) {
+                //         return parseInt(val).toFixed(0);
+                //     }
+                // }
             }
         };
 
@@ -240,4 +241,3 @@
         chart.render();
     </script>
 @endsection
-

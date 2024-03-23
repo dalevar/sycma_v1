@@ -207,7 +207,7 @@
                         menarik, serta konsultasi gratis dengan tim ahli kami!</p>
                 </div>
                 <div class="col-lg-3 cta-btn-container text-center">
-                    <a class="cta-btn align-middle" href="#">Jadwalkan Sekarang!</a>
+                    <a class="cta-btn align-middle" href="https://www.whatsapp.com/">Jadwalkan Sekarang!</a>
                 </div>
             </div>
 
@@ -245,21 +245,6 @@
                                 class="bx bx-shopping-bag"></i></a>
                     </div>
                 </div>
-
-                <div class="col-lg-4 col-md-6 portfolio-item filter-app">
-                    <div class="portfolio-img"><img src="{{ asset('import/assets/img/product/Fragtion-1-min.png') }}"
-                            class="img-fluid" alt=""></div>
-                    <div class="portfolio-info">
-                        <h4>Sycma Fragtion</h4>
-                        <p> Attendance Face Recognition</p>
-                        <a href="{{ asset('import/assets/img/portfolio/portfolio-3.jpg') }}"
-                            data-gallery="portfolioGallery" class="portfolio-lightbox preview-link"
-                            title="More Details"><i class="bx bx-info-circle"></i></a>
-                        <a href="portfolio-details.html" class="details-link" title="Shop Now"><i
-                                class="bx bx-shopping-bag"></i></a>
-                    </div>
-                </div>
-
                 <div class="col-lg-4 col-md-6 portfolio-item filter-card">
                     <div class="portfolio-img"><img src="{{ asset('import/assets/img/product/SaaS-1-min.png') }}"
                             class="img-fluid" alt=""></div>
@@ -273,7 +258,15 @@
                                 class="bx bx-navigation"></i></a>
                     </div>
                 </div>
-
+                <div class="col-lg-4 col-md-6 portfolio-item filter-app">
+                    <div class="portfolio-img-coming-soon"><img
+                            src="{{ asset('import/assets/img/product/Fragtion-1-min.png') }}" class="img-fluid"
+                            alt="">
+                    </div>
+                    <div class="portfolio-coming-soon">
+                        <h4 clas="text-center text-light">Coming Soon</h4>
+                    </div>
+                </div>
                 <div class="col-lg-4 col-md-6 portfolio-item filter-app">
                     <div class="portfolio-img-coming-soon"><img
                             src="{{ asset('import/assets/img/product/ARFID-3-min.png') }}" class="img-fluid"
