@@ -16,7 +16,7 @@
                     <div class="d-flex align-items-end row">
                         <div class="col-sm-7">
                             <div class="card-body">
-                                <h5 class="card-title text-primary">Selamat Datang, Admin!</h5>
+                                <h5 class="card-title text-primary">Selamat Datang, {{ $admin->name }}!</h5>
                                 <p class="mb-4">
                                     Silakan pantau presensi siswa dengan menggunakan fitur yang tersedia.
                                 </p>
@@ -74,18 +74,31 @@
                                 <div class="card-title mb-0">
                                     <h5 class="m-0 me-2">Jumlah Seluruh Siswa Yang Melaksanakan Sholat</h5>
                                 </div>
-                                <div class="dropdown">
+                                {{-- <div class="dropdown">
                                     <input class="form-control" type="date" value="{{ date('Y-m-d') }}"
                                         id="html5-date-input">
-                                </div>
+                                </div> --}}
                             </div>
                             {{-- <div id="totalPresensi" class="px-2"></div> --}}
-                            {!! $chart->container() !!}
+                            @if ($presensi->isEmpty())
+                                <h2 class="text-muted text-center px-2" style="margin-top: 4em; padding-bottom: 5.4em">Belum
+                                    ada siswa yang
+                                    melaksanakan
+                                    Sholat</h2>
+                            @else
+                                {!! $chart->container() !!}
+                            @endif
+
                         </div>
                         <div class="col-md-4">
+                            <div class="card-header d-flex align-items-center justify-content-between pb-0">
+                                <div class="card-title mb-0">
+                                    <h5 class="m-0 me-2">Total Jumlah Siswa</h5>
+                                </div>
+                            </div>
                             <div class="card-body">
                                 <div class="d-flex justify-content-between mb-4">
-                                    <div class="d-flex align-items-center">
+                                    <div class="d-flex align-items-center" style="padding-top: 2em;">
                                         <div class="avatar avatar-sm me-2">
                                             <img src="backoffice/assets/img/icons/unicons/laki-avatar.png" alt="Graduation"
                                                 class="rounded" />

@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Guru;
+use App\Exports\GuruExport;
+use App\Imports\GuruImport;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 
 class GuruController extends Controller
 {
@@ -13,13 +16,14 @@ class GuruController extends Controller
         if (Auth::guard('admin')->check() == true) {
             $admin = Auth::guard('admin')->user();
             $sekolah = $admin->sekolah;
+            $namaAdmin = $admin->name;
 
             $guru = Guru::where('sekolah_id', $sekolah->id)->paginate(15);
             $totalGuru = Guru::where('sekolah_id', $sekolah->id)->count();
             $totalGuruLaki = Guru::where('sekolah_id', $sekolah->id)->where('jenis_kelamin', 'L')->count();
             $totalGuruPerempuan = Guru::where('sekolah_id', $sekolah->id)->where('jenis_kelamin', 'P')->count();
 
-            return view('dashboard.pages.admin.guru.guru', compact('sekolah', 'guru', 'totalGuru', 'totalGuruLaki', 'totalGuruPerempuan'));
+            return view('dashboard.pages.admin.guru.guru', compact('sekolah', 'guru', 'totalGuru', 'totalGuruLaki', 'totalGuruPerempuan', 'namaAdmin'));
         } elseif (Auth::guard('web')->check() == true) {
             $guru = Auth::guard('web')->user();
             $sekolah = $guru->sekolah;
@@ -125,5 +129,20 @@ class GuruController extends Controller
         $totalGuruPerempuan = Guru::where('sekolah_id', $sekolah->id)->where('jenis_kelamin', 'P')->count();
 
         return view('dashboard.pages.admin.guru.guru', compact('guru', 'search', 'sekolah', 'totalGuru', 'totalGuruLaki', 'totalGuruPerempuan'))->with('search', $search);
+    }
+
+    public function import(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:csv,xls,xlsx'
+        ]);
+
+        $file = $request->file('file');
+        $nama_file = rand() . $file->getClientOriginalName();
+        $file->move('file_guru', $nama_file);
+
+        Excel::import(new GuruImport, public_path('/file_guru/' . $nama_file));
+
+        return redirect()->route('guru.index')->with('success', 'Data guru berhasil diimport');
     }
 }

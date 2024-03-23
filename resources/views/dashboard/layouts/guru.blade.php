@@ -38,8 +38,10 @@
     <link rel="stylesheet" href="{{ asset('backoffice/assets/vendor/libs/apex-charts/apex-charts.css') }}" />
 
     <!-- DataTables -->
-    <link rel="stylesheet" href="{{ asset('backoffice/DataTables/datatables.min.css') }}" />
-    <script src="DataTables/datatables.min.js"></script>
+    {{-- <link rel="stylesheet" href="{{ asset('backoffice/DataTables/datatables.min.css') }}" />
+    <script src="DataTables/datatables.min.js"></script> --}}
+    <link rel="stylesheet" href="{{ asset('backoffice/libs/datatables/datatables.min.css') }}">
+    <script src="{{ asset('backoffice/libs/datatables/datatables.min.js') }}"></script>
 
     <!-- Apex Chart -->
     <link rel="stylesheet" href="{{ asset('backoffice/libs/apexcharts/dist/apexcharts.css') }}">
@@ -131,8 +133,7 @@
     <script src="{{ asset('backoffice/assets/js/jquery-3.6.0.min.js') }}"></script>
     {{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> --}}
 
-    {{-- DataTables --}}
-    <script src="{{ asset('backoffice/DataTables/datatables.min.js') }}"></script>
+    <script src="{{ asset('backoffice/libs/datatables/datatables.min.js') }}"></script>
 
     {{-- Apex Chart --}}
     <script src="{{ asset('backoffice/libs/apexcharts/dist/apexcharts.min.js') }}"></script>

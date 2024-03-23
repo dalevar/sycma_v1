@@ -15,6 +15,7 @@ class SiswaController extends Controller
         if (Auth::guard('admin')->check() == true) {
             $admin = Auth::guard('admin')->user();
             $sekolah = $admin->sekolah;
+            $namaAdmin = $admin->name;
 
             $siswa = Siswa::where('sekolah_id', $sekolah->id)->get();
 
@@ -42,7 +43,7 @@ class SiswaController extends Controller
             $totalDataSiswaLaki = Siswa::where('sekolah_id', $sekolah->id)->where('jenis_kelamin', 'L')->count();
             $totalDataSiswaPerempuan = Siswa::where('sekolah_id', $sekolah->id)->where('jenis_kelamin', 'P')->count();
 
-            return view('dashboard.pages.admin.siswa.siswa', compact('admin', 'sekolah', 'jurusan', 'kelasArray', 'kelas', 'nokartu', 'siswa', 'totalDataSiswa', 'totalDataSiswaLaki', 'totalDataSiswaPerempuan'));
+            return view('dashboard.pages.admin.siswa.siswa', compact('admin', 'sekolah', 'jurusan', 'kelasArray', 'kelas', 'nokartu', 'siswa', 'totalDataSiswa', 'totalDataSiswaLaki', 'totalDataSiswaPerempuan', 'namaAdmin'));
         } elseif (Auth::guard('web')->check() == true) {
             $guru = Auth::guard('web')->user();
             $sekolah = $guru->sekolah;

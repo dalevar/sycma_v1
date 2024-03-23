@@ -50,4 +50,9 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Sekolah::class);
     }
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
+    }
 }

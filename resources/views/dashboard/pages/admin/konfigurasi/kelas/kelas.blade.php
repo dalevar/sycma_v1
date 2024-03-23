@@ -7,9 +7,11 @@
             <h6 class="card-header fw-bold">Data Kelas</h6>
             <div class="card-body">
                 <div class="d-flex justify-content-end mb-3">
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#tambahModal">
-                        <i class="bx bx-plus"></i> Kelas
-                    </button>
+                    <div class="col-md-12 text-start">
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#tambahModal">
+                            <i class="bx bx-plus"></i> Kelas
+                        </button>
+                    </div>
                 </div>
                 @if (session('success'))
                     <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -33,7 +35,7 @@
                     </div>
                 @endif
                 <div class="table-responsive">
-                    <table class="table table-bordered table-hover mb-0">
+                    <table class="table table-bordered table-hover mb-0" id={{ $kelas->isEmpty() ? '' : 'kelasTables' }}>
                         <thead>
                             <tr>
                                 <th>No</th>
@@ -43,23 +45,31 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($kelas as $item)
+                            @if ($kelas->isEmpty())
                                 <tr>
-                                    <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $item->kelas }}</td>
-                                    <td>{{ $item->jurusan->jurusan }}</td>
-                                    <td>
-                                        <button type="button" class="btn btn-warning btn-sm mb-2" data-bs-toggle="modal"
-                                            data-bs-target="#editModal_{{ $loop->index + 1 }}">
-                                            <i class="bx bx-edit"></i>
-                                        </button>
-                                        <button type="button" class="btn btn-danger btn-sm mb-2" data-bs-toggle="modal"
-                                            data-bs-target="#hapusModal_{{ $loop->index + 1 }}">
-                                            <i class="bx bx-trash"></i>
-                                        </button>
+                                    <td colspan="4" class="h3 text-muted text-center">Data Kelas Kosong, Tambahkan Data!
                                     </td>
                                 </tr>
-                            @endforeach
+                            @else
+                                @foreach ($kelas as $item)
+                                    <tr>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $item->kelas }}</td>
+                                        <td>{{ $item->jurusan->jurusan }}</td>
+                                        <td>
+                                            <button type="button" class="btn btn-warning btn-sm mb-2"
+                                                data-bs-toggle="modal" data-bs-target="#editModal_{{ $loop->index + 1 }}">
+                                                <i class="bx bx-edit"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-danger btn-sm mb-2" data-bs-toggle="modal"
+                                                data-bs-target="#hapusModal_{{ $loop->index + 1 }}">
+                                                <i class="bx bx-trash"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            @endif
+
                         </tbody>
                     </table>
                     {{-- {{ $jurusan->links() }} --}}
@@ -213,4 +223,25 @@
             </div>
         </div>
     @endforeach
+
+    <script src="{{ asset('backoffice/libs/datatables/datatables.min.js') }}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            // Initialize DataTable with your table ID
+            $('#kelasTable').DataTable({
+                language: {
+                    url: '//cdn.datatables.net/plug-ins/2.0.3/i18n/id.json',
+                    paginate: {
+                        previous: "‹", // Arrow left symbol
+                        next: "›", // Arrow right symbol
+                        first: "«", // Double arrow left symbol
+                        last: "»" // Double arrow right symbol
+                    }
+                },
+                "paging": true, // Enable pagination
+            });
+        });
+    </script>
 @endsection

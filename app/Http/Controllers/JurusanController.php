@@ -12,11 +12,12 @@ class JurusanController extends Controller
     {
         // $jurusan = Jurusan::paginate(10);
         $admin = Auth::guard('admin')->user(); // Mengambil admin yang sedang login
-        // dd($admin);
         $sekolah = $admin->sekolah;
+        $namaAdmin = $admin->name;
+
         $jurusan = Jurusan::where('sekolah_id', $sekolah->id)->get();
 
-        return view('dashboard.pages.admin.konfigurasi.jurusan.jurusan', compact('jurusan', 'sekolah'));
+        return view('dashboard.pages.admin.konfigurasi.jurusan.jurusan', compact('jurusan', 'sekolah', 'namaAdmin'));
     }
 
     public function store(Request $request)

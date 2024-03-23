@@ -14,9 +14,9 @@ class JadwalSholatController extends Controller
         $admin = Auth::guard('admin')->user();
         $jadwalSholat = \App\Models\JadwalSholat::all();
         $sekolah = $admin->sekolah;
+        $namaAdmin = $admin->name;
 
-
-        return view('dashboard.pages.admin.konfigurasi.jadwal-sholat.jadwalSholat', compact('jadwalSholat', 'sekolah'));
+        return view('dashboard.pages.admin.konfigurasi.jadwal-sholat.jadwalSholat', compact('jadwalSholat', 'sekolah', 'namaAdmin'));
     }
 
     public function update(Request $request, JadwalSholat $jadwalSholat)

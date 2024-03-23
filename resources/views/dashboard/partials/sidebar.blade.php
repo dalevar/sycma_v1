@@ -79,6 +79,15 @@
                 <div data-i18n="Basic">Jurusan</div>
             </a>
         </li>
+        <li class="menu-header small text-uppercase">
+            <span class="menu-header-text">Pages</span>
+        </li>
+        <li class="menu-item {{ Request::is('profile*') ? 'active' : '' }}">
+            <a href="{{ url('profile') }}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-dock-top"></i>
+                <div data-i18n="Basic">Pengaturan Akun</div>
+            </a>
+        </li>
 
 
         <div class="menu-footer mt-4 mx-auto">

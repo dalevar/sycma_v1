@@ -6,17 +6,17 @@
         <div class="card mb-4">
             <div class="card-header align-content-end align-items-end">
                 <h6 class="fw-bold">Data Presensi Sholat</h6>
-                <div class="d-flex justify-content-between mb-3">
-                    <div class="col-md-4">
+                <div class="d-flex justify-content-between">
+                    {{-- <div class="col-md-4">
                         <div class="nav-item d-flex align-items-center form-control">
                             <i class="bx bx-search fs-4 lh-0"></i>
                             <input type="text" class="form-control border-0 shadow-none" placeholder="Search..."
                                 aria-label="Nama Siswa">
                         </div>
-                    </div>
-                    <div class="col-md-2">
+                    </div> --}}
+                    {{-- <div class="col-md-2">
                         <input class="form-control" type="date" value="2021-06-18" id="html5-date-input">
-                    </div>
+                    </div> --}}
                 </div>
             </div>
 
@@ -43,10 +43,13 @@
                     </div>
                 @endif
                 <div class="table-responsive mb-4">
-                    <table class="table table-bordered table-hover mb-0">
+                    <table class="table table-bordered table-hover mb-0"
+                        id={{ $presensi->isEmpty() ? '' : 'presensiTables' }}>
                         <thead>
                             <tr>
                                 <th>Nama Siswa</th>
+                                <th>Kelas</th>
+                                <th>Jurusan</th>
                                 <th>Tanggal</th>
                                 <th>Waktu Sholat</th>
                                 <th>Jenis Sholat</th>
@@ -56,32 +59,41 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($presensi as $p)
+                            @if ($presensi->isEmpty())
                                 <tr>
-                                    <td>{{ $p->siswa->nama_lengkap }}</td>
-                                    <td>{{ $p->tanggal }}</td>
-                                    <td>{{ $p->waktu_sholat }}</td>
-                                    <td>{{ $p->jenis_sholat }}</td>
-                                    <td>{{ $p->jam_sholat }}</td>
-                                    <td>
-                                        @if ($p->status == 'Tepat Waktu')
-                                            <span class="badge bg-label-success">Tepat Waktu</span>
-                                        @elseif ($p->status == 'Sholat')
-                                            <span class="badge bg-label-warning">Sholat</span>
-                                        @endif
-                                    </td>
-                                    <td>
-                                        <button type="button" class="btn btn-info btn-sm mb-2" data-bs-toggle="modal"
-                                            data-bs-target="#detailModal_{{ $loop->index + 1 }}">
-                                            <i class="bx bx-show"></i>
-                                        </button>
-                                        <button type="button" class="btn btn-danger btn-sm mb-2" data-bs-toggle="modal"
-                                            data-bs-target="#hapusModal_{{ $loop->index + 1 }}">
-                                            <i class="bx bx-trash"></i>
-                                        </button>
-                                    </td>
+                                    <td colspan="9" class="h3 text-muted text-center">Belum ada data presensi siswa</td>
                                 </tr>
-                            @endforeach
+                            @else
+                                @foreach ($presensi as $p)
+                                    <tr>
+                                        <td>{{ $p->siswa->nama_lengkap }}</td>
+                                        <td>{{ $p->siswa->kelas->kelas }}</td>
+                                        <td>{{ $p->siswa->jurusan->jurusan }}</td>
+                                        <td>{{ $p->tanggal }}</td>
+                                        <td>{{ $p->waktu_sholat }}</td>
+                                        <td>{{ $p->jenis_sholat }}</td>
+                                        <td>{{ $p->jam_sholat }}</td>
+                                        <td>
+                                            @if ($p->status == 'Tepat Waktu')
+                                                <span class="badge bg-label-success">Tepat Waktu</span>
+                                            @elseif ($p->status == 'Sholat')
+                                                <span class="badge bg-label-warning">Sholat</span>
+                                            @endif
+                                        </td>
+                                        <td>
+                                            <button type="button" class="btn btn-info btn-sm mb-2" data-bs-toggle="modal"
+                                                data-bs-target="#detailModal_{{ $loop->index + 1 }}">
+                                                <i class="bx bx-show"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-danger btn-sm mb-2" data-bs-toggle="modal"
+                                                data-bs-target="#hapusModal_{{ $loop->index + 1 }}">
+                                                <i class="bx bx-trash"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            @endif
+
                         </tbody>
                     </table>
                 </div>
@@ -112,75 +124,95 @@
                     </div>
                     <div class="card-body">
                         <ul class="p-0 m-0">
-                            @foreach ($presensi as $p)
-                                <li class="d-flex mb-4 pb-1">
-                                    <div class="avatar flex-shrink-0 me-3">
-                                        <img src="backoffice/assets/img/icons/unicons/{{ $p->siswa->jenis_kelamin == 'L' ? 'laki-avatar.png' : 'cewe-avatar.png' }}"
-                                            alt="User" class="rounded" />
-                                    </div>
-                                    <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
-                                        <div class="me-2">
-                                            <small
-                                                class="text-muted d-block mb-1">{{ $p->siswa->jurusan->jurusan }}</small>
-                                            <h6 class="mb-0">{{ $p->siswa->nama_lengkap }}</h6>
+                            @if ($presensi->isEmpty())
+                                <h2 class="text-muted text-center" style="margin-top: 4em">Belum ada siswa yang
+                                    melaksanakan Sholat
+                                </h2>
+                            @else
+                                @foreach ($presensi as $p)
+                                    <li class="d-flex mb-4 pb-1">
+                                        <div class="avatar flex-shrink-0 me-3">
+                                            <img src="backoffice/assets/img/icons/unicons/{{ $p->siswa->jenis_kelamin == 'L' ? 'laki-avatar.png' : 'cewe-avatar.png' }}"
+                                                alt="User" class="rounded" />
                                         </div>
-                                        <div class="user-progress d-flex align-items-center gap-1">
-                                            <span class="text-muted">Waktu</span>
-                                            <h6 class="mb-0">{{ $p->jam_sholat }}</h6>
+                                        <div
+                                            class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+                                            <div class="me-2">
+                                                <small
+                                                    class="text-muted d-block mb-1">{{ $p->siswa->jurusan->jurusan }}</small>
+                                                <h6 class="mb-0">{{ $p->siswa->nama_lengkap }}</h6>
+                                            </div>
+                                            <div class="user-progress d-flex align-items-center gap-1">
+                                                <span class="text-muted">Waktu</span>
+                                                <h6 class="mb-0">{{ $p->jam_sholat }}</h6>
+                                            </div>
                                         </div>
-                                    </div>
-                                </li>
-                            @endforeach
+                                    </li>
+                                @endforeach
+                            @endif
                         </ul>
                     </div>
                 </div>
             </div>
             <!--/ Presensi Siswa Terbaru -->
 
-            <!-- Chart Presensi Siswa berdasarkan Jurusan Kelas -->
+            <!-- Chart Presensi seluruh siswa -->
             <div class="col-12 col-lg-8 order-2 order-md-3 order-lg-2 mb-4">
                 <div class="card">
                     <div class="row row-bordered g-0">
-                        <div class="col-md-12">
-                            <div class="card-header d-flex align-items-center pb-0">
+                        <div class="col-md-8">
+                            <div class="card-header d-flex align-items-center justify-content-between pb-0">
                                 <div class="card-title mb-0">
-                                    <h5 class="m-0 me-2 mb-2">Jumlah Presensi Sholat Siswa Berdasarkan Jurusan
-                                        dan Kelas</h5>
-                                    <div class="row g-2 mb-2">
-                                        <div class="col-md-4">
-                                            <div class="dropdown">
-                                                <select class="form-select" id="kelasDropdown">
-                                                    <option value="0" selected disabled>Kelas
-                                                    </option>
-                                                    @foreach ($kelas as $k)
-                                                        <option value="{{ $k->id }}">{{ $k->kelas }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
+                                    <h5 class="m-0 me-2">Jumlah Seluruh Siswa Yang Melaksanakan Sholat</h5>
+                                </div>
+                            </div>
+                            @if ($presensi->isEmpty())
+                                <h2 class="text-muted text-center px-2" style="margin-top: 4em; padding-bottom: 5.4em">
+                                    Belum
+                                    ada siswa yang
+                                    melaksanakan
+                                    Sholat</h2>
+                            @else
+                                {!! $chart->container() !!}
+                            @endif
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card-header d-flex align-items-center justify-content-between pb-0">
+                                <div class="card-title mb-0">
+                                    <h5 class="m-0 me-2">Total Jumlah Siswa</h5>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between mb-4">
+                                    <div class="d-flex align-items-center" style="padding-top: 2em;">
+                                        <div class="avatar avatar-sm me-2">
+                                            <img src="backoffice/assets/img/icons/unicons/laki-avatar.png"
+                                                alt="Graduation" class="rounded" />
                                         </div>
-                                        <div class="col-md-4">
-                                            <div class="dropdown">
-                                                <select class="form-select" id="jurusanDropdown">
-                                                    <option value="0" selected disabled>Jurusan
-                                                    </option>
-                                                    @foreach ($jurusan as $j)
-                                                        <option value="{{ $j->id }}">{{ $j->jurusan }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
+                                        <div>
+                                            <h6 class="mb-0">Total Siswa Laki-Laki</h6>
+                                            <small class="text-muted">{{ $totalSiswaLaki }} Siswa</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-between">
+                                    <div class="d-flex align-items-center">
+                                        <div class="avatar avatar-sm me-2">
+                                            <img src="backoffice/assets/img/icons/unicons/cewe-avatar.png"
+                                                alt="Graduation" class="rounded" />
+                                        </div>
+                                        <div>
+                                            <h6 class="mb-0">Total Siswa Perempuan</h6>
+                                            <small class="text-muted">{{ $totalSiswaPerempuan }} Siswa</small>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            {{-- <div id="presensiJurusanKelas" class="px-2"></div> --}}
-                            {!! $chart->container() !!}
                         </div>
                     </div>
                 </div>
             </div>
-            <!--/ Chart Presensi Siswa berdasarkan Jurusan Kelas -->
+            <!--/Chart Presensi seluruh siswa -->
         </div>
     </div>
 
@@ -319,4 +351,25 @@
     {{ $chart->script() }}
     <script src="{{ asset('backoffice/libs/apexcharts/dist/apexcharts.min.js') }}"></script>
     <script src="{{ asset('backoffice/js/chartPresensi.js') }}"></script>
+    <script src="{{ asset('backoffice/libs/datatables/datatables.min.js') }}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            // Initialize DataTable with your table ID
+            $('#presensiTable').DataTable({
+                language: {
+                    url: '//cdn.datatables.net/plug-ins/2.0.3/i18n/id.json',
+                    paginate: {
+                        previous: "‹", // Arrow left symbol
+                        next: "›", // Arrow right symbol
+                        first: "«", // Double arrow left symbol
+                        last: "»" // Double arrow right symbol
+                    }
+                },
+                "paging": true, // Enable pagination
+                "searching": true, // Enable search/filtering
+            });
+        });
+    </script>
 @endsection

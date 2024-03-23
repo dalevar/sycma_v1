@@ -68,18 +68,11 @@
                 <h6 class="card-header fw-bold">Data Siswa</h6>
                 <div class="card-body">
                     <div class="d-flex justify-content-between mb-3">
-                        <div class="col-md-6">
-                            <div class="nav-item d-flex align-items-center form-control">
-                                <i class="bx bx-search fs-4 lh-0"></i>
-                                <input type="text" class="form-control border-0 shadow-none" placeholder="Search..."
-                                    aria-label="Nama Siswa">
-                            </div>
-                        </div>
-                        <div class="col-md-6 text-end">
-                            <button type="button" class="btn btn-success" data-bs-toggle="modal"
+                        <div class="col-md-12 text-start">
+                            {{-- <button type="button" class="btn btn-success" data-bs-toggle="modal"
                                 data-bs-target="#tambahModal">
                                 <i class="bx bx-plus"></i> Import Excel
-                            </button>
+                            </button> --}}
                             <button type="button" class="btn btn-primary " data-bs-toggle="modal"
                                 data-bs-target="#tambahModal">
                                 <i class="bx bx-plus"></i> Siswa
@@ -108,7 +101,8 @@
                         </div>
                     @endif
                     <div class="table-responsive">
-                        <table class="table table-bordered table-hover mb-0">
+                        <table class="table table-bordered table-hover mb-0"
+                            id={{ $siswa->isEmpty() ? '' : 'siswaTable' }}>
                             <thead>
                                 <tr>
                                     <th>ID Kartu</th>
@@ -122,35 +116,42 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($siswa as $s)
+                                @if ($siswa->isEmpty())
                                     <tr>
-                                        <td>{{ $s->no_kartu }}</td>
-                                        <td>{{ $s->nama_lengkap }}</td>
-                                        <td>{{ $s->kelas->kelas }}</td>
-                                        <td>{{ $s->jurusan->jurusan }}</td>
-                                        <td>
-                                            @if ($s->jenis_kelamin == 'L')
-                                                Laki-Laki
-                                            @else
-                                                Perempuan
-                                            @endif
-                                        </td>
-
-                                        <td>{{ $s->no_hp }}</td>
-                                        <td>{{ $s->nis }}</td>
-                                        <td>
-                                            <button type="button" class="btn btn-warning btn-sm mb-2"
-                                                data-bs-toggle="modal" data-bs-target="#editModal_{{ $s->id }}">
-                                                <i class="bx bx-edit"></i>
-                                            </button>
-                                            <button type="button" class="btn btn-danger btn-sm mb-2" data-bs-toggle="modal"
-                                                data-bs-target="#hapusModal_{{ $s->id }}">
-                                                <i class="bx bx-trash"></i>
-                                            </button>
-                                        </td>
+                                        <td colspan="8" class="h3 text-muted text-center">Data Siswa Kosong, Tambahkan
+                                            Data!</td>
                                     </tr>
-                                @endforeach
+                                @else
+                                    @foreach ($siswa as $s)
+                                        <tr>
+                                            <td>{{ $s->no_kartu }}</td>
+                                            <td>{{ $s->nama_lengkap }}</td>
+                                            <td>{{ $s->kelas->kelas }}</td>
+                                            <td>{{ $s->jurusan->jurusan }}</td>
+                                            <td>
+                                                @if ($s->jenis_kelamin == 'L')
+                                                    Laki-Laki
+                                                @else
+                                                    Perempuan
+                                                @endif
+                                            </td>
 
+                                            <td>{{ $s->no_hp }}</td>
+                                            <td>{{ $s->nis }}</td>
+                                            <td>
+                                                <button type="button" class="btn btn-warning btn-sm mb-2"
+                                                    data-bs-toggle="modal" data-bs-target="#editModal_{{ $s->id }}">
+                                                    <i class="bx bx-edit"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-danger btn-sm mb-2"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#hapusModal_{{ $s->id }}">
+                                                    <i class="bx bx-trash"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                @endif
                             </tbody>
                         </table>
                     </div>
@@ -485,6 +486,23 @@
             setInterval(function() {
                 $('#no_kartu').load('{{ route('no-kartu.index') }}')
             }, 1000);
+        });
+
+        $(document).ready(function() {
+            // Initialize DataTable with your table ID
+            $('#siswaTable').DataTable({
+                language: {
+                    url: '//cdn.datatables.net/plug-ins/2.0.3/i18n/id.json',
+                    paginate: {
+                        previous: "‹", // Arrow left symbol
+                        next: "›", // Arrow right symbol
+                        first: "«", // Double arrow left symbol
+                        last: "»" // Double arrow right symbol
+                    }
+                },
+                "paging": true, // Enable pagination
+                "searching": true, // Enable search/filtering
+            });
         });
     </script>
 @endsection

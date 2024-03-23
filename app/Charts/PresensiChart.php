@@ -33,7 +33,6 @@ class PresensiChart
             // Menghitung jumlah siswa perempuan yang melaksanakan sholat
             $totalPresensiSiswaPerempuan = $presensi->where('siswa.jenis_kelamin', 'P')->count();
 
-
             if ($totalPresensiSiswa == 0) {
                 return $this->chart->pieChart()
                     ->addData([0, 0])

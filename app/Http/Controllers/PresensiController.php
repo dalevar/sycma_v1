@@ -20,9 +20,13 @@ class PresensiController extends Controller
         if (Auth::guard('admin')->check() == true) {
             $admin = Auth::guard('admin')->user();
             $sekolah = $admin->sekolah;
+            $namaAdmin = $admin->name;
+
             $tanggal = date('Y-m-d');
             $presensi = PresensiSholat::where('sekolah_id', $sekolah->id)->where('tanggal', $tanggal)->get();
-
+            $totalDataSiswa = $sekolah->siswa->count();
+            $totalSiswaLaki = $sekolah->siswa->where('jenis_kelamin', 'L')->count();
+            $totalSiswaPerempuan = $sekolah->siswa->where('jenis_kelamin', 'P')->count();
 
             $kelas = Kelas::where('sekolah_id', $sekolah->id)->get();
             if ($kelas->isEmpty()) {
@@ -36,7 +40,7 @@ class PresensiController extends Controller
 
             $chart = $chart->build();
 
-            return view('dashboard.pages.admin.presensi.presensi', compact('sekolah', 'presensi', 'kelas', 'jurusan', 'chart'));
+            return view('dashboard.pages.admin.presensi.presensi', compact('sekolah', 'presensi', 'kelas', 'jurusan', 'chart', 'namaAdmin', 'totalDataSiswa', 'totalSiswaLaki', 'totalSiswaPerempuan'));
         } elseif (Auth::guard('web')->check() == true) {
             $guru = Auth::guard('web')->user();
             $sekolah = $guru->sekolah;
@@ -50,10 +54,11 @@ class PresensiController extends Controller
         if (Auth::guard('admin')->check() == true) {
             $admin = Auth::guard('admin')->user();
             $sekolah = $admin->sekolah;
+            $namaAdmin = $admin->name;
 
             $presensi = PresensiSholat::where('sekolah_id', $sekolah->id)->get();
 
-            return view('dashboard.pages.admin.presensi.rekap-presensi', compact('sekolah', 'presensi'));
+            return view('dashboard.pages.admin.presensi.rekap-presensi', compact('sekolah', 'presensi', 'namaAdmin'));
         } elseif (Auth::guard('web')->check() == true) {
             $guru = Auth::guard('web')->user();
             $sekolah = $guru->sekolah;
@@ -67,6 +72,7 @@ class PresensiController extends Controller
         if (Auth::guard('admin')->check() == true) {
             $admin = Auth::guard('admin')->user();
             $sekolah = $admin->sekolah;
+            $namaAdmin = $admin->name;
 
             // Ambil data status
             $status = Status::first();
@@ -96,6 +102,7 @@ class PresensiController extends Controller
             return view('dashboard.pages.admin.presensi.scan', compact(
                 'sekolah',
                 'mode',
+                'namaAdmin',
             ));
         } elseif (Auth::guard('web')->check() == true) {
             $guru = Auth::guard('web')->user();
@@ -109,6 +116,7 @@ class PresensiController extends Controller
     {
         $admin = Auth::guard('admin')->user();
         $sekolah = $admin->sekolah;
+        $namaAdmin = $admin->name;
 
         $status = Status::first();
         $mode_absen = $status->mode;
@@ -125,7 +133,7 @@ class PresensiController extends Controller
         }
 
 
-        return view('dashboard.pages.admin.presensi.baca-kartu', compact('mode_absen', 'mode', 'no_kartu', 'sekolah'));
+        return view('dashboard.pages.admin.presensi.baca-kartu', compact('mode_absen', 'mode', 'no_kartu', 'sekolah', 'namaAdmin'));
     }
 
     public function noKartu()
@@ -151,6 +159,7 @@ class PresensiController extends Controller
     {
         $admin = Auth::guard('admin')->user();
         $sekolah = $admin->sekolah;
+
         dd($presensiSholat->sekolah_id, $sekolah->id);
 
         // Validasi no_kartu

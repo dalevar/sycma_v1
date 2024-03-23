@@ -13,11 +13,12 @@ class KelasController extends Controller
     {
         $admin = Auth::guard('admin')->user();
         $sekolah = $admin->sekolah;
+        $namaAdmin = $admin->name;
 
         $kelas = Kelas::where('sekolah_id', $sekolah->id)->get();
         $jurusan = Jurusan::where('sekolah_id', $sekolah->id)->get();
         // dd($kelas, $jurusan, $sekolah);
-        return view('dashboard.pages.admin.konfigurasi.kelas.kelas', compact('kelas', 'jurusan', 'sekolah'));
+        return view('dashboard.pages.admin.konfigurasi.kelas.kelas', compact('kelas', 'jurusan', 'sekolah', 'namaAdmin'));
     }
 
     public function store(Request $request)

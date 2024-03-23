@@ -143,3 +143,12 @@ Route::get('/login/google/callback', [\App\Http\Controllers\Auth\SocialiteContro
 
 // RFID CARD Route
 Route::get('presensi/kirimkartu/{nokartu}', [\App\Http\Controllers\rfid\RfidCard::class, 'kirimKartu'])->name('rfid-card.index');
+
+// Import Route
+Route::post('guru/import', [GuruController::class, 'import'])->name('guru.import');
+
+
+// Profile Route
+Route::get('profile', [DashboardController::class, 'profileAdmin'])->name('profile.index');
+Route::put('profile/{admin}', [DashboardController::class, 'updateProfileAdmin'])->name('profile.update');
+Route::delete('profile/{admin}', [DashboardController::class, 'destroyProfileAdmin'])->name('profile.destroy');

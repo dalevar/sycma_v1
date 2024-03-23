@@ -21,6 +21,11 @@ class Product extends Model
         'pajak',
     ];
 
+    public function User()
+    {
+        return $this->belongsTo(User::class);
+    }
+
     public function category()
     {
         return $this->belongsTo(Category::class);

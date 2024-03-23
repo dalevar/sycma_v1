@@ -1,9 +1,9 @@
 @extends('dashboard.layouts.main')
 @section('title', 'Guru - Sycma Attendance')
 @section('content')
+
     <div class="container-xxl flex-grow-1 container-p-y">
         <div class="row">
-
             <h4 class="font-weight-bold py-3 mb-0 card-header text-dark">Guru {{ $sekolah->nama_sekolah }}</h4>
             <div class="col-lg-12 mb-2 order-0">
                 <div class="row">
@@ -67,7 +67,7 @@
             <div class="card mb-4">
                 <h6 class="card-header fw-bold">Data Guru</h6>
                 <div class="card-body">
-                    <div class="d-flex justify-content-end mb-3 align-items-center">
+                    <div class="d-flex justify-content-end align-items-center">
                         {{-- <div class="col-md-6">
                             <form action="{{ route('cari-guru') }}" method="GET"
                                 class="d-flex align-items-center form-control" id="searchForm">
@@ -75,17 +75,11 @@
                                 <i class="bx bx-search fs-4 lh-0 "></i>
                                 <input type="search" class="form-control border-0 shadow-none me-2" name="search"
                                     placeholder="Search..." aria-label="Search" value="{{ request('search') }}">
-                                <div class="btn-group">
-                                    <button type="submit" class="btn btn-primary">Cari</button>
-                                    <button type="button" class="btn btn-icon btn-outline-secondary" id="clearSearch">
-                                        <span style="cursor: pointer; color: #007bff;">&times;</span>
-                                    </button>
-                                </div>
                             </form>
                         </div> --}}
-                        <div class="col-md-6 text-end">
+                        <div class="col-md-12">
                             <button type="button" class="btn btn-success" data-bs-toggle="modal"
-                                data-bs-target="#tambahModal">
+                                data-bs-target="#importModal">
                                 <i class="bx bx-plus"></i> Import Excel
                             </button>
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal"
@@ -94,7 +88,6 @@
                             </button>
                         </div>
                     </div>
-
                 </div>
                 @if (session('success'))
                     <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -117,8 +110,9 @@
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                 @endif
-                <div class="table-responsive">
-                    <table class="table table-bordered table-hover mb-4" id="guruTable">
+                <div class="table-responsive pb-4 px-4">
+                    {{-- <table class="table table-bordered table-hover mb-4"> --}}
+                    <table class="table table-bordered table-hover mb-4" id={{ $guru->isEmpty() ? '' : 'guruTable' }}>
                         <thead>
                             <tr>
                                 <th>No</th>
@@ -131,27 +125,33 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($guru as $g)
+                            @if ($guru->isEmpty())
                                 <tr>
-                                    <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $g->nama_lengkap }}</td>
-                                    <td>{{ $g->email }}</td>
-                                    <td>{{ $g->no_hp }}</td>
-                                    <td>{{ $g->jenis_kelamin == 'L' ? 'Laki-Laki' : 'Perempuan' }}</td>
-                                    <td>{{ $g->nip }}</td>
-                                    <td>
-                                        <button type="button" class="btn btn-warning btn-sm mb-2" data-bs-toggle="modal"
-                                            data-bs-target="#editModal_{{ $g->id }}">
-                                            <i class="bx bx-edit"></i>
-                                        </button>
-                                        <button type="button" class="btn btn-danger btn-sm mb-2" data-bs-toggle="modal"
-                                            data-bs-target="#hapusModal_{{ $g->id }}">
-                                            <i class="bx bx-trash"></i>
-                                        </button>
+                                    <td colspan="7" class="h3 text-muted text-center">Data Guru Kosong, Tambahkan Data!
                                     </td>
                                 </tr>
-                            @endforeach
-
+                            @else
+                                @foreach ($guru as $g)
+                                    <tr>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $g->nama_lengkap }}</td>
+                                        <td>{{ $g->email }}</td>
+                                        <td>{{ $g->no_hp }}</td>
+                                        <td>{{ $g->jenis_kelamin == 'L' ? 'Laki-Laki' : 'Perempuan' }}</td>
+                                        <td>{{ $g->nip }}</td>
+                                        <td>
+                                            <button type="button" class="btn btn-warning btn-sm mb-2"
+                                                data-bs-toggle="modal" data-bs-target="#editModal_{{ $g->id }}">
+                                                <i class="bx bx-edit"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-danger btn-sm mb-2" data-bs-toggle="modal"
+                                                data-bs-target="#hapusModal_{{ $g->id }}">
+                                                <i class="bx bx-trash"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            @endif
                         </tbody>
                     </table>
                 </div>
@@ -253,6 +253,35 @@
                             Close
                         </button>
                         <button type="submit" class="btn btn-primary">Simpan</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Import Modal -->
+    <div class="modal
+        fade" id="importModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel1">Import Data Guru</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="{{ route('guru.import') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <div class="modal-body">
+                        {{ csrf_field() }}
+                        <label>Pilih file excel</label>
+                        <div class="form-group">
+                            <input type="file" name="file" class="form-control" required="required">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                            Close
+                        </button>
+                        <button type="submit" class="btn btn-primary">Import</button>
                     </div>
                 </form>
             </div>
@@ -383,7 +412,7 @@
                                     </p>
                                 </div>
                                 <div class="align-items-center text-left">
-                                    <label for="nama_lengkap" class="form-label">Ketik :
+                                    <label for="nama_lengkap">Ketik :
                                         {{ $item->nama_lengkap }}</label>
                                     <input type="text" id="nama_lengkap" class="form-control" name="nama_lengkap" />
                                 </div>
@@ -403,12 +432,22 @@
     @endforeach
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.datatables.net/1.11.6/js/jquery.dataTables.min.js"></script>
+    <script src="{{ asset('backoffice/libs/datatables/datatables.min.js') }}"></script>
+
 
     <script>
         $(document).ready(function() {
             // Initialize DataTable with your table ID
             $('#guruTable').DataTable({
+                language: {
+                    url: '//cdn.datatables.net/plug-ins/2.0.3/i18n/id.json',
+                    paginate: {
+                        previous: "‹", // Arrow left symbol
+                        next: "›", // Arrow right symbol
+                        first: "«", // Double arrow left symbol
+                        last: "»" // Double arrow right symbol
+                    }
+                },
                 "paging": true, // Enable pagination
                 "searching": true, // Enable search/filtering
             });
