@@ -11,7 +11,9 @@ use Illuminate\Http\Request;
 use App\Charts\PresensiChart;
 use App\Models\TemporaryRfid;
 use App\Models\PresensiSholat;
+use App\Exports\PresensiExport;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 
 class PresensiController extends Controller
 {
@@ -426,5 +428,10 @@ class PresensiController extends Controller
             $presensiSholat->delete();
             return redirect()->route('presensi.index')->with('delete', 'Presensi siswa berhasil dihapus');
         }
+    }
+
+    public function export()
+    {
+        return Excel::download(new PresensiExport, 'Presensi.xlsx');
     }
 }

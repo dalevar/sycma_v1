@@ -164,3 +164,6 @@ Route::get('presensi/kirimkartu/{nokartu}', [\App\Http\Controllers\rfid\RfidCard
 
 // Import Route
 Route::post('guru/import', [GuruController::class, 'import'])->name('guru.import');
+
+// Export Route
+Route::post('presensi/export', [PresensiController::class, 'export'])->name('presensi.export');

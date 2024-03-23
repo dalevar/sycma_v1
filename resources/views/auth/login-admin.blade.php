@@ -20,7 +20,6 @@
                         <!-- /Logo -->
                         <h4 class="mb-2">Welcome to Sycma! 👋</h4>
                         <p class="mb-4">Login menggunakan akun admin untuk memulai</p>
-
                         <form id="formAuthentication" class="mb-3" action="{{ route('login-admin-proses') }}"
                             method="POST">
                             @csrf
@@ -32,7 +31,6 @@
                                     <small class="text-danger invalid-feedback d-block">{{ $message }}</small>
                                 @enderror
                             </div>
-
                             <div class="mb-3 form-password-toggle">
                                 <div class="d-flex justify-content-between">
                                     <label class="form-label" for="password">Password</label>
@@ -50,12 +48,10 @@
                                     @enderror
                                 </div>
                             </div>
-
                             <div class="mb-3">
                                 <button class="btn btn-primary d-grid w-100" type="submit">Masuk</button>
                             </div>
                         </form>
-
                         <p class="text-left mt-2">
                             <span>Login sebagai guru ?</span>
                             <a href="{{ route('login') }}">
@@ -73,7 +69,6 @@
                                 <hr class="my-0 mx-2 border-top border-1 border-dark">
                             </div>
                         </div>
-
                         <p class="text-left mt-2">
                             <span>Belum punya akun ?</span>
                             <a href="{{ route('register') }}">

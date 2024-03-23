@@ -21,18 +21,12 @@
                         <small class="text-muted pb-3">Rekap Presensi : {{ $namaBulan }} - {{ $tahun }}</small>
                     </div>
                 </div>
-                <div class="col-md-6 text-end">
-                    <div class="d-flex justify-content-end align-items-center mt-4 mx-4">
-                        {{-- <a href="{{ route('admin.presensi.export', ['bulan' => $bulan, 'tahun' => $tahun]) }}"
-                            class="btn btn-success">Export Excel</a> --}}
-                        <a href="#" class="btn btn-success">Export Excel</a>
-                    </div>
-                </div>
+
             </div>
 
             <div class="card-body">
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-2">
                         <div class="form-group">
                             <label for="bulan">Pilih Bulan</label>
                             <select class="form-select" id="bulan" name="bulan" onchange="getData()">
@@ -44,7 +38,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-2">
                         <div class="form-group">
                             <label for="tahun">Pilih Tahun</label>
                             <select class="form-select" id="tahun" name="tahun" onchange="getData()">
@@ -54,6 +48,16 @@
                                     </option>
                                 @endfor
                             </select>
+                        </div>
+                    </div>
+                    <div class="col-md-8 text-end">
+                        <div class="d-flex justify-content-end align-items-end mt-4">
+                            {{-- <a href="{{ route('admin.presensi.export', ['bulan' => $bulan, 'tahun' => $tahun]) }}"
+                                class="btn btn-success">Export Excel</a> --}}
+                            <form action="{{ route('presensi.export') }}" method="POST">
+                                @csrf
+                                <button type="submit" class="btn btn-success">Export Excel</button>
+                            </form>
                         </div>
                     </div>
                 </div>
