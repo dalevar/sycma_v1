@@ -31,7 +31,8 @@
             </a>
         </li>
         <li class="menu-item {{ Request::is('rekap-presensi*') ? 'active' : '' }}">
-            <a href="{{ url('rekap-presensi-guru') }}" class="menu-link">
+            <a href="{{ route('rekap-presensi-guru.index', ['bulan' => date('m'), 'tahun' => date('Y')]) }}"
+                class="menu-link">
                 <i class="menu-icon tf-icons bx bx-book-content"></i>
                 <div data-i18n="Basic">Rekapitulasi</div>
             </a>

@@ -20,7 +20,8 @@
                                 <p class="mb-4">
                                     Silakan pantau presensi siswa dengan menggunakan fitur yang tersedia.
                                 </p>
-                                <a href="javascript:;" class="btn btn-sm btn-outline-primary">Lihat Presensi</a>
+                                <a href="{{ route('presensi-guru.index') }}" class="btn btn-sm btn-outline-primary">Lihat
+                                    Presensi</a>
                             </div>
                         </div>
                         <div class="col-sm-5 text-center text-sm-left">

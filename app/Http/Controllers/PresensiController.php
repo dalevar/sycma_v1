@@ -69,52 +69,241 @@ class PresensiController extends Controller
         return view('dashboard.pages.guru.presensi.presensi', compact('sekolah', 'presensi', 'kelas', 'jurusan', 'chart', 'namaGuru', 'totalDataSiswa', 'totalSiswaLaki', 'totalSiswaPerempuan', 'guru'));
     }
 
-    public function rekapPresensi()
+    public function rekapPresensi($bulan, $tahun)
     {
         $admin = Auth::guard('admin')->user();
         $sekolah = $admin->sekolah;
         $namaAdmin = $admin->name;
 
-        $bulan = date('m');
-        $tahun = date('Y');
+        // Set nilai default untuk bulan dan tahun jika tidak disediakan dalam URL
+        $bulan = $bulan ?? date('m');
+        $tahun = $tahun ?? date('Y');
 
-        $presensi = PresensiSholat::where('sekolah_id', $sekolah->id)->get();
+        $bulan = max(1, min(12, $bulan));
+        $bulanIndonesia = [
+            1 => 'Januari',
+            2 => 'Februari',
+            3 => 'Maret',
+            4 => 'April',
+            5 => 'Mei',
+            6 => 'Juni',
+            7 => 'Juli',
+            8 => 'Agustus',
+            9 => 'September',
+            10 => 'Oktober',
+            11 => 'November',
+            12 => 'Desember',
+        ];
+
+        $namaBulan = $bulanIndonesia[intval($bulan)];
+
+        // Hitung jumlah hari dalam bulan yang ditentukan
+        $jumlahHari = cal_days_in_month(CAL_GREGORIAN, $bulan, $tahun);
+
+        // Buat array untuk menyimpan semua tanggal dalam bulan ini
+        $tanggalBulan = [];
+        for ($i = 1; $i <= $jumlahHari; $i++) {
+            $tanggalBulan[] = $i;
+        }
+
+        // Ubah format tanggal menjadi 'Y-m-d' untuk menggunakan tipe 'date' di grafik
+        $tanggalBulanFormat = [];
+        foreach ($tanggalBulan as $tanggal) {
+            $tanggalBulanFormat[] = $tahun . '-' . str_pad($bulan, 2, '0', STR_PAD_LEFT) . '-' . str_pad($tanggal, 2, '0', STR_PAD_LEFT);
+        }
+
+        // Ambil data presensi berdasarkan bulan dan tahun
+        $presensi = PresensiSholat::where('sekolah_id', $sekolah->id)
+            ->whereMonth('created_at', $bulan)
+            ->whereYear('created_at', $tahun)
+            ->get();
+
+        $jumlahPresensiPerTanggal = [];
+        foreach ($tanggalBulanFormat as $tanggal) {
+            // Periksa apakah tanggal tersebut bukan hari Jumat, Sabtu, atau Minggu
+            $hari = date('N', strtotime($tanggal)); // Mendapatkan hari dalam format ISO 8601 (1 untuk Senin, 7 untuk Minggu)
+            if ($hari >= 1 && $hari <= 5) {
+                // Jika bukan hari Jumat (5), Sabtu (6), atau Minggu (7)
+                // Hitung jumlah presensi sholat untuk tanggal tertentu
+                $jumlahPresensiPerTanggal[$tanggal] = $presensi->where('tanggal', $tanggal)->count();
+            } else {
+                // Jika tanggal tersebut adalah hari Jumat, Sabtu, atau Minggu, set jumlah presensinya menjadi 0
+                $jumlahPresensiPerTanggal[$tanggal] = 0;
+            }
+        }
+
+
+        $dataGrafik = [];
+        foreach ($tanggalBulanFormat as $tanggal) {
+            $dataGrafik[] = $jumlahPresensiPerTanggal[$tanggal];
+        }
+        $dataGrafik = array_map('intval', $dataGrafik); // Konversi semua nilai menjadi bilangan bulat
+
+        // Ambil bulan dan tahun dalam format teks untuk digunakan pada judul grafik
+        $namaBulan = $bulanIndonesia[intval($bulan)];
+        $judulGrafik = "Grafik Presensi Sholat - $namaBulan $tahun";
+
+        // Ambil semua siswa yang terdaftar di sekolah
         $siswa = Siswa::where('sekolah_id', $sekolah->id)->get();
 
-
-
-        return view('dashboard.pages.admin.presensi.rekap-presensi', compact('sekolah', 'presensi', 'namaAdmin', 'bulan', 'tahun', 'siswa'));
+        return view('dashboard.pages.admin.presensi.rekap-presensi', compact('sekolah', 'presensi', 'namaAdmin', 'bulan', 'tahun', 'siswa', 'namaBulan', 'bulanIndonesia', 'tanggalBulan', 'tanggalBulanFormat', 'judulGrafik', 'dataGrafik', 'jumlahPresensiPerTanggal'));
     }
 
-    public function rekapPresensiGuru()
+    public function rekapPresensiGuru($bulan, $tahun)
     {
         $guru = Auth::guard('web')->user();
         $sekolah = $guru->sekolah;
         $namaGuru = $guru->name;
 
-        $bulan = date('m');
-        $tahun = date('Y');
+        // Set nilai default untuk bulan dan tahun jika tidak disediakan dalam URL
+        $bulan = $bulan ?? date('m');
+        $tahun = $tahun ?? date('Y');
 
-        $presensi = PresensiSholat::where('sekolah_id', $sekolah->id)->get();
+        $bulan = max(1, min(12, $bulan));
+        $bulanIndonesia = [
+            1 => 'Januari',
+            2 => 'Februari',
+            3 => 'Maret',
+            4 => 'April',
+            5 => 'Mei',
+            6 => 'Juni',
+            7 => 'Juli',
+            8 => 'Agustus',
+            9 => 'September',
+            10 => 'Oktober',
+            11 => 'November',
+            12 => 'Desember',
+        ];
+
+        $namaBulan = $bulanIndonesia[intval($bulan)];
+
+        // Hitung jumlah hari dalam bulan yang ditentukan
+        $jumlahHari = cal_days_in_month(CAL_GREGORIAN, $bulan, $tahun);
+
+        // Buat array untuk menyimpan semua tanggal dalam bulan ini
+        $tanggalBulan = [];
+        for ($i = 1; $i <= $jumlahHari; $i++) {
+            $tanggalBulan[] = $i;
+        }
+
+        // Ubah format tanggal menjadi 'Y-m-d' untuk menggunakan tipe 'date' di grafik
+        $tanggalBulanFormat = [];
+        foreach ($tanggalBulan as $tanggal) {
+            $tanggalBulanFormat[] = $tahun . '-' . str_pad($bulan, 2, '0', STR_PAD_LEFT) . '-' . str_pad($tanggal, 2, '0', STR_PAD_LEFT);
+        }
+
+        // Ambil data presensi berdasarkan bulan dan tahun
+        $presensi = PresensiSholat::where('sekolah_id', $sekolah->id)
+            ->whereMonth('created_at', $bulan)
+            ->whereYear('created_at', $tahun)
+            ->get();
+
+        $jumlahPresensiPerTanggal = [];
+        foreach ($tanggalBulanFormat as $tanggal) {
+            // Periksa apakah tanggal tersebut bukan hari Jumat, Sabtu, atau Minggu
+            $hari = date('N', strtotime($tanggal)); // Mendapatkan hari dalam format ISO 8601 (1 untuk Senin, 7 untuk Minggu)
+            if ($hari >= 1 && $hari <= 5) {
+                // Jika bukan hari Jumat (5), Sabtu (6), atau Minggu (7)
+                // Hitung jumlah presensi sholat untuk tanggal tertentu
+                $jumlahPresensiPerTanggal[$tanggal] = $presensi->where('tanggal', $tanggal)->count();
+            } else {
+                // Jika tanggal tersebut adalah hari Jumat, Sabtu, atau Minggu, set jumlah presensinya menjadi 0
+                $jumlahPresensiPerTanggal[$tanggal] = 0;
+            }
+        }
+
+
+        $dataGrafik = [];
+        foreach ($tanggalBulanFormat as $tanggal) {
+            $dataGrafik[] = $jumlahPresensiPerTanggal[$tanggal];
+        }
+        $dataGrafik = array_map('intval', $dataGrafik); // Konversi semua nilai menjadi bilangan bulat
+
+        // Ambil bulan dan tahun dalam format teks untuk digunakan pada judul grafik
+        $namaBulan = $bulanIndonesia[intval($bulan)];
+        $judulGrafik = "Grafik Presensi Sholat - $namaBulan $tahun";
+
+        // Ambil semua siswa yang terdaftar di sekolah
         $siswa = Siswa::where('sekolah_id', $sekolah->id)->get();
 
-        return view('dashboard.pages.guru.presensi.rekap-presensi', compact('sekolah', 'presensi', 'namaGuru', 'bulan', 'tahun', 'siswa', 'guru'));
+        return view('dashboard.pages.guru.presensi.rekap-presensi', compact('sekolah', 'presensi', 'namaGuru', 'bulan', 'tahun', 'siswa', 'namaBulan', 'bulanIndonesia', 'tanggalBulan', 'tanggalBulanFormat', 'judulGrafik', 'dataGrafik', 'jumlahPresensiPerTanggal', 'guru'));
     }
 
 
-    public function rekapPresensiDetail(Siswa $siswa)
+    public function rekapPresensiDetail(Siswa $siswa, $bulan, $tahun)
     {
         $admin = Auth::guard('admin')->user();
         $sekolah = $admin->sekolah;
         $namaAdmin = $admin->name;
 
-        $bulan = date('m');
-        $tahun = date('Y');
+        // Set nilai default untuk bulan dan tahun jika tidak disediakan dalam URL
+        $bulan = $bulan ?? date('m');
+        $tahun = $tahun ?? date('Y');
 
-        $presensi = PresensiSholat::where('sekolah_id', $sekolah->id)->where('siswa_id', $siswa->id)->get();
+        $bulan = max(1, min(12, $bulan));
+        // dd($bulan);
+        $bulanIndonesia = [
+            1 => 'Januari',
+            2 => 'Februari',
+            3 => 'Maret',
+            4 => 'April',
+            5 => 'Mei',
+            6 => 'Juni',
+            7 => 'Juli',
+            8 => 'Agustus',
+            9 => 'September',
+            10 => 'Oktober',
+            11 => 'November',
+            12 => 'Desember',
+        ];
 
+        $namaBulan = $bulanIndonesia[intval($bulan)];
 
-        return view('dashboard.pages.admin.presensi.rekap-presensi-detail', compact('sekolah', 'presensi', 'namaAdmin', 'bulan', 'tahun', 'siswa'));
+        $presensi = PresensiSholat::where('sekolah_id', $sekolah->id)
+            ->where('siswa_id', $siswa->id)
+            ->whereMonth('created_at', $bulan)
+            ->whereYear('created_at', $tahun)
+            ->get();
+
+        return view('dashboard.pages.admin.presensi.rekap-presensi-detail', compact('sekolah', 'presensi', 'namaAdmin', 'bulan', 'tahun', 'siswa',  'bulanIndonesia', 'namaBulan'));
+    }
+
+    public function rekapPresensiDetailGuru(Siswa $siswa, $bulan, $tahun)
+    {
+        $guru = Auth::guard('web')->user();
+        $sekolah = $guru->sekolah;
+        $namaGuru = $guru->name;
+
+        // Set nilai default untuk bulan dan tahun jika tidak disediakan dalam URL
+        $bulan = $bulan ?? date('m');
+        $tahun = $tahun ?? date('Y');
+
+        $bulan = max(1, min(12, $bulan));
+        // dd($bulan);
+        $bulanIndonesia = [
+            1 => 'Januari',
+            2 => 'Februari',
+            3 => 'Maret',
+            4 => 'April',
+            5 => 'Mei',
+            6 => 'Juni',
+            7 => 'Juli',
+            8 => 'Agustus',
+            9 => 'September',
+            10 => 'Oktober',
+            11 => 'November',
+            12 => 'Desember',
+        ];
+
+        $namaBulan = $bulanIndonesia[intval($bulan)];
+
+        $presensi = PresensiSholat::where('sekolah_id', $sekolah->id)
+            ->where('siswa_id', $siswa->id)
+            ->whereMonth('created_at', $bulan)
+            ->whereYear('created_at', $tahun)
+            ->get();
+
+        return view('dashboard.pages.guru.presensi.rekap-presensi-detail', compact('sekolah', 'presensi', 'namaGuru', 'bulan', 'tahun', 'siswa',  'bulanIndonesia', 'namaBulan', 'guru'));
     }
 
     public function scanKartu()

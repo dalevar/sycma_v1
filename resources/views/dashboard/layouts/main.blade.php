@@ -45,6 +45,8 @@
 
     <!-- Apex Chart -->
     <link rel="stylesheet" href="{{ asset('backoffice/libs/apexcharts/dist/apexcharts.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
 
 
     <!-- Helpers -->
@@ -141,6 +143,8 @@
 
     {{-- Apex Chart --}}
     <script src="{{ asset('backoffice/libs/apexcharts/dist/apexcharts.min.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
     @stack('scripts')
 </body>
 

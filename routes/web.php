@@ -105,9 +105,9 @@ Route::get('presensi', [PresensiController::class, 'index'])->name('presensi.ind
 Route::delete('presensi/{presensi}', [PresensiController::class, 'destroy'])->name('presensi.destroy');
 
 // Rekap Presensi
-Route::get('rekap-presensi', [PresensiController::class, 'rekapPresensi'])->name('rekap-presensi.index');
+Route::get('rekap-presensi/{bulan}/{tahun}', [PresensiController::class, 'rekapPresensi'])->name('rekap-presensi.index');
 // Rekap Presensi Detail Siswa
-Route::get('rekap-presensi/{siswa}', [PresensiController::class, 'rekapPresensiDetail'])->name('rekap-presensi-detail.index');
+Route::get('rekap-presensi/{siswa}/{bulan}/{tahun}', [PresensiController::class, 'rekapPresensiDetail'])->name('rekap-presensi-detail.index');
 
 // Scan Kartu
 Route::get('scan', [PresensiController::class, 'scanKartu'])->name('scan-kartu.index');
@@ -125,8 +125,8 @@ Route::delete('profile/{admin}', [DashboardController::class, 'destroyProfileAdm
 Route::get('presensi-guru', [PresensiController::class, 'presensiGuru'])->name('presensi-guru.index');
 
 // REKAP PRESENSI GURU ROUTE
-Route::get('rekap-presensi-guru', [PresensiController::class, 'rekapPresensiGuru'])->name('rekap-presensi-guru.index');
-Route::get('rekap-presensi-guru/{siswa}', [PresensiController::class, 'rekapPresensiDetailGuru'])->name('rekap-presensi-detail-guru.index');
+Route::get('rekap-presensi-guru/{bulan}/{tahun}', [PresensiController::class, 'rekapPresensiGuru'])->name('rekap-presensi-guru.index');
+Route::get('rekap-presensi-guru/{siswa}/{bulan}/{tahun}', [PresensiController::class, 'rekapPresensiDetailGuru'])->name('rekap-presensi-detail-guru.index');
 
 // SISWA GURU ROUTE
 Route::get('siswa-guru', [SiswaController::class, 'indexGuru'])->name('siswa-guru.index');

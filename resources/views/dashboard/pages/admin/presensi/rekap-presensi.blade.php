@@ -2,13 +2,23 @@
 @section('title', 'Presensi Sholat - Sycma Attendance')
 @section('content')
     <div class="container-xxl flex-grow-1 container-p-y">
-        <h4 class="font-weight-bold py-3 mb-0 card-header">Rekapitulasi Presensi Sholat</h4>
+        <h4 class="fw-bold py-3 mb-4">Rekap Presensi
+        </h4>
+        <ul class="nav nav-pills flex-column flex-md-row mb-3 gap-2">
+            <li class="nav-item">
+                <a class="nav-link active"><i class="bx bx-book-content"></i> Rekap Presensi</a>
+            </li>
+            <li class="nav-item">
+                <button disabled class="btn btn-outline-primary"><i class="bx bx-face me-1"></i>
+                    Detail Siswa</button>
+            </li>
+        </ul>
         <div class="card mb-4">
             <div class="row">
                 <div class="col-md-6">
                     <div class="card-header ">
                         <h6 class="fw-bold">Data Presensi Sholat</h6>
-                        <small class="text-muted pb-3">Rekap Presensi : {{ date('M') }} - {{ date('Y') }}</small>
+                        <small class="text-muted pb-3">Rekap Presensi : {{ $namaBulan }} - {{ $tahun }}</small>
                     </div>
                 </div>
                 <div class="col-md-6 text-end">
@@ -21,54 +31,27 @@
             </div>
 
             <div class="card-body">
-                @if (session('success'))
-                    <div class="alert alert-success alert-dismissible fade show" role="alert">
-                        <strong>Sukses! Data berhasil ditambahkan</strong> {{ session('status') }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                @elseif (session('update'))
-                    <div class="alert alert-success alert-dismissible fade show" role="alert">
-                        <strong>Sukses! Data berhasil diupdate</strong> {{ session('status') }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                @elseif (session('delete'))
-                    <div class="alert alert-success alert-dismissible fade show" role="alert">
-                        <strong>Sukses! Data berhasil dihapus</strong> {{ session('status') }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                @elseif(session('error'))
-                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                        <strong>Gagal!</strong> {{ session('error') }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                @endif
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="bulan">Pilih Bulan</label>
-                            <select class="form-select" id="bulan" name="bulan">
-                                <option value="1" {{ $bulan == 1 ? 'selected' : '' }}>Januari</option>
-                                <option value="2" {{ $bulan == 2 ? 'selected' : '' }}>Februari</option>
-                                <option value="3" {{ $bulan == 3 ? 'selected' : '' }}>Maret</option>
-                                <option value="4" {{ $bulan == 4 ? 'selected' : '' }}>April</option>
-                                <option value="5" {{ $bulan == 5 ? 'selected' : '' }}>Mei</option>
-                                <option value="6" {{ $bulan == 6 ? 'selected' : '' }}>Juni</option>
-                                <option value="7" {{ $bulan == 7 ? 'selected' : '' }}>Juli</option>
-                                <option value="8" {{ $bulan == 8 ? 'selected' : '' }}>Agustus</option>
-                                <option value="9" {{ $bulan == 9 ? 'selected' : '' }}>September</option>
-                                <option value="10" {{ $bulan == 10 ? 'selected' : '' }}>Oktober</option>
-                                <option value="11" {{ $bulan == 11 ? 'selected' : '' }}>November</option>
-                                <option value="12" {{ $bulan == 12 ? 'selected' : '' }}>Desember</option>
+                            <select class="form-select" id="bulan" name="bulan" onchange="getData()">
+                                @for ($i = 1; $i <= 12; $i++)
+                                    <option value="{{ $i }}" {{ $bulan == $i ? 'selected' : '' }}>
+                                        {{ $bulanIndonesia[$i] }}
+                                    </option>
+                                @endfor
                             </select>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="tahun">Pilih Tahun</label>
-                            <select class="form-select" id="tahun" name="tahun">
-                                @for ($i = 2021; $i <= date('Y'); $i++)
+                            <select class="form-select" id="tahun" name="tahun" onchange="getData()">
+                                @for ($i = 2023; $i <= date('Y'); $i++)
                                     <option value="{{ $i }}" {{ $tahun == $i ? 'selected' : '' }}>
-                                        {{ $i }}</option>
+                                        {{ $i }}
+                                    </option>
                                 @endfor
                             </select>
                         </div>
@@ -81,10 +64,11 @@
                             <tr>
                                 <th width="2%">No</th>
                                 <th>Nama</th>
+                                <th>Jenis Kelamin</th>
                                 <th width="5%">Kelas</th>
                                 <th>Jurusan</th>
                                 <th width="16%">Total Sholat Dzuhur</th>
-                                <th width="14%">Aksi</th>
+                                <th width="4%">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -107,57 +91,50 @@
                                 }
                             @endphp
 
-                            @foreach ($presensiPerSiswa as $siswaId => $jumlahPresensi)
-                                @php
-                                    // Ambil data siswa berdasarkan id
-                                    $siswa = $siswa->where('id', $siswaId)->first();
-                                @endphp
+                            @if (count($presensiPerSiswa) == 0)
                                 <tr>
-                                    <td class="text-center">{{ $loop->iteration }}</td>
-                                    <td>{{ $siswa->nama_lengkap }}</td>
-                                    <td class="text-center">{{ $siswa->kelas->kelas }}</td>
-                                    <td>{{ $siswa->jurusan->jurusan }}</td>
-                                    <td>{{ $jumlahPresensi }}</td>
-                                    <td>
-                                        <a href="{{ url('rekap-presensi', $siswa->id) }}" class="btn btn-info btn-sm mb-2">
-                                            <i class="bx bx-show"></i>
-                                        </a>
-                                        <button type="button" class="btn btn-warning btn-sm mb-2" data-bs-toggle="modal"
-                                            data-bs-target="#editModal_{{ $siswaId }}">
-                                            <i class="bx bx-edit"></i>
-                                        </button>
-                                        <button type="button" class="btn btn-danger btn-sm mb-2" data-bs-toggle="modal"
-                                            data-bs-target="#hapusModal_{{ $siswaId }}">
-                                            <i class="bx bx-trash"></i>
-                                        </button>
-                                    </td>
+                                    <td colspan="7" class="text-center">Tidak ada data presensi</td>
                                 </tr>
-                            @endforeach
+                            @else
+                                @foreach ($presensiPerSiswa as $siswaId => $jumlahPresensi)
+                                    @php
+                                        // Ambil data siswa berdasarkan id
+                                        $siswa = \App\Models\Siswa::find($siswaId);
+                                    @endphp
+                                    @if ($siswa)
+                                        <tr>
+                                            <td class="text-center">{{ $loop->iteration }}</td>
+                                            <td>{{ $siswa->nama_lengkap }}</td>
+                                            <td>{{ $siswa->jenis_kelamin == 'L' ? 'Laki-laki' : 'Perempuan' }}</td>
+                                            <td class="text-center">{{ $siswa->kelas->kelas }}</td>
+                                            <td>{{ $siswa->jurusan->jurusan }}</td>
+                                            <td>{{ $jumlahPresensi }}</td>
+                                            <td class="text-center">
+                                                <a href="{{ route('rekap-presensi-detail.index', ['siswa' => $siswa->id, 'bulan' => $bulan, 'tahun' => $tahun]) }}"
+                                                    class="btn btn-info btn-sm mb-2">
+                                                    <i class="bx bx-show"></i>
+                                                </a>
 
+                                            </td>
+                                        </tr>
+                                    @endif
+                                @endforeach
+                            @endif
                         </tbody>
                     </table>
                 </div>
 
-                <div class="row mt-4">
-                    <div class="col-md-6">
-                        <div class="card">
-                            <div class="card-header">
-                                <h6 class="card-title">Grafik Presensi Sholat</h6>
-                            </div>
-                            <div class="card-body">
-                                <div id="chart-presensi"></div>
-                            </div>
-                        </div>
+
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h6 class="card-title">Grafik Presensi Sholat</h6>
                     </div>
-                    <div class="col-md-6">
-                        <div class="card">
-                            <div class="card-header">
-                                <h6 class="card-title">Grafik Persentase Presensi Sholat</h6>
-                            </div>
-                            <div class="card-body">
-                                <div id="chart-persentase"></div>
-                            </div>
-                        </div>
+                    <div class="card-body">
+                        <div id="chart-presensi"></div>
                     </div>
                 </div>
             </div>
@@ -168,11 +145,34 @@
 
     {{ $chart->script() }} --}}
     <script src="{{ asset('backoffice/libs/apexcharts/dist/apexcharts.min.js') }}"></script>
-    <script src="{{ asset('backoffice/js/chartPresensi.js') }}"></script>
+    {{-- <script src="{{ asset('backoffice/js/chartPresensi.js') }}"></script> --}}
     <script src="{{ asset('backoffice/libs/datatables/datatables.min.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <script>
+        // Fungsi untuk mengambil data presensi dengan Ajax
+        function getData() {
+            var bulan = document.getElementById('bulan').value; // Ambil nilai bulan dari opsi yang dipilih
+            var tahun = document.getElementById('tahun').value; // Ambil nilai tahun dari opsi yang dipilih
+
+            // Buat URL dengan bulan dan tahun yang dipilih
+            var url = "/rekap-presensi/" + bulan + "/" + tahun;
+
+            // Kirim permintaan Ajax ke URL yang sesuai
+            $.ajax({
+                url: url, // URL ke controller untuk mengambil data
+                method: "GET", // Metode HTTP yang digunakan
+                success: function(response) { // Ketika permintaan berhasil
+                    // Memperbarui URL
+                    window.location.href = url;
+                },
+                error: function(xhr, status, error) { // Ketika terjadi kesalahan dalam permintaan
+                    console.error(xhr.responseText); // Tampilkan pesan kesalahan di konsol
+                }
+            });
+        }
+
         $(document).ready(function() {
             // Initialize DataTable with your table ID
             $('#rekapTables').DataTable({
@@ -190,4 +190,54 @@
             });
         });
     </script>
+
+    {{-- GRAFIK PRESENSI SHOLAT --}}
+    <script>
+        var options = {
+            series: [{
+                name: "Presensi Sholat",
+                data: <?php echo json_encode(array_map('intval', $dataGrafik)); ?>
+            }],
+            chart: {
+                height: 350,
+                type: 'line',
+                zoom: {
+                    enabled: false
+                }
+            },
+            dataLabels: {
+                enabled: false
+            },
+            stroke: {
+                curve: 'straight'
+            },
+            title: {
+                align: 'left'
+            },
+            grid: {
+                row: {
+                    colors: ['#f3f3f3', 'transparent'],
+                    opacity: 0.5
+                },
+            },
+            xaxis: {
+                type: 'datetime',
+                categories: <?php echo json_encode($tanggalBulanFormat); ?>,
+            },
+            yaxis: {
+                title: {
+                    text: 'Jumlah Presensi'
+                },
+                labels: {
+                    formatter: function(val) {
+                        return parseInt(val).toFixed(0);
+                    }
+                }
+            }
+        };
+
+        var chart = new ApexCharts(document.querySelector("#chart-presensi"), options);
+        chart.render();
+    </script>
 @endsection
+

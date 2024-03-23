@@ -1,16 +1,17 @@
-@extends('dashboard.layouts.main')
+@extends('dashboard.layouts.guru')
 @section('title', 'Presensi Sholat - Sycma Attendance')
 
 @section('content')
     <div class="container-xxl flex-grow-1 container-p-y">
-        <h4 class="fw-bold py-3 mb-4"><a href="{{ route('rekap-presensi.index', ['bulan' => $bulan, 'tahun' => $tahun]) }}"
+        <h4 class="fw-bold py-3 mb-4"><a
+                href="{{ route('rekap-presensi-guru.index', ['bulan' => $bulan, 'tahun' => $tahun]) }}"
                 class="text-muted fw-light">Rekap Presensi
                 /</a> {{ $siswa->nama_lengkap }}
         </h4>
         <ul class="nav nav-pills flex-column flex-md-row mb-3 gap-2">
             <li class="nav-item">
                 <a class="btn btn-outline-primary"
-                    href="{{ route('rekap-presensi.index', ['bulan' => $bulan, 'tahun' => $tahun]) }}"><i
+                    href="{{ route('rekap-presensi-guru.index', ['bulan' => $bulan, 'tahun' => $tahun]) }}"><i
                         class="bx bx-book-content"></i> Rekap Presensi</a>
             </li>
             <li class="nav-item">
