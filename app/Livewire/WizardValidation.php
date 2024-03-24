@@ -22,7 +22,16 @@ class WizardValidation extends Component
     public function render()
     {
         $packages = Product::software()->get();
-        return view('livewire.wizard-validation', compact('packages'));
+
+        $packageIds = [];
+        foreach ($packages as $package) {
+            $packageId = $package->id;
+            $packageIds[] = $packageId;
+        }
+
+        $package = Product::findMany($packageIds);
+
+        return view('livewire.wizard-validation', compact('packages', 'packageId', 'package'));
     }
 
     private function validateStep()
@@ -53,6 +62,7 @@ class WizardValidation extends Component
     public function secondStepSubmit()
     {
         $this->validateStep();
+
         $this->currentStep = 3;
 
         session()->flash('success', 'Daftar akun berhasil, silahkan login');

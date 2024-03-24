@@ -4,11 +4,12 @@
 </div>
 <div class="card-body">
     <h6 class="fw-medium">Paket : <span class="fw-bold">
-            @if ($product_id = 1)
-                Ultra Free
-            @elseif ($product_id = 2)
-                Ultra Attendance
-            @endif
+            @foreach ($package as $paket)
+                @if ($selectedPackage == $paket->id)
+                    {{ $paket->nama_product }}
+                @endif
+            @endforeach
+
         </span></h6>
 
     <hr class="border-dashed mb-4">

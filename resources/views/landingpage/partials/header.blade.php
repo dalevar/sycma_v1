@@ -9,7 +9,6 @@
                 <li class="dropdown"><a href="#services"><span>Layanan</span> <i class="bi bi-chevron-down"></i></a>
                     <ul>
                         <li><a href="/">Sycma ARFID</a></li>
-                        <li><a href="/">Sycma Fragtion</a></li>
                         <li class="dropdown"><a href="#"><span>Software as a Services</span> <i
                                     class="bi bi-chevron-right"></i></a>
                             <ul>
