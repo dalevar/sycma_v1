@@ -18,14 +18,29 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card mb-4">
-                    <h5 class="card-header">Profile Details</h5>
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h5 class="">Profile Details</h5>
+                            </div>
+                            <div class="col-md-6 text-end">
+                                <p class="text-muted">Masa aktif akun : </p>
+                            </div>
+                            <div class="col-md-12 text-start">
+                                <h5 class="fw-bold">Status Pembayaran Paket: <span
+                                        class="badge {{ $status == 'success' ? 'bg-success' : 'bg-secondary' }}">{{ $status }}</span>
+                                </h5>
+                            </div>
+                        </div>
+                    </div>
                     <!-- Account -->
                     <div class="card-body">
                         <div class="d-flex align-items-start align-items-sm-center gap-4">
                             <img src="{{ asset('backoffice/assets/img/avatars/admin.png') }}" alt="user-avatar"
                                 class="d-block rounded" height="100" width="100" id="uploadedAvatar">
+
                             <div class="button-wrapper">
-                                <label for="upload" class="btn bg-secondary  text-muted me-2 mb-4" tabindex="0">
+                                {{-- <label for="upload" class="btn bg-secondary  text-muted me-2 mb-4" tabindex="0">
                                     <span class="d-none d-sm-block">Unggah Foto</span>
                                     <i class="bx bx-upload d-block d-sm-none"></i>
                                     <input type="file" id="upload" class="account-file-input" hidden=""
@@ -35,9 +50,11 @@
                                     <i class="bx bx-reset d-block d-sm-none"></i>
                                     <span class="d-none d-sm-block">Reset</span>
                                 </button>
-                                <p class="text-muted mb-0">Allowed JPG, GIF or PNG. Max size of 800K</p>
+                                <p class="text-muted mb-0">Allowed JPG, GIF or PNG. Max size of 800K</p> --}}
                             </div>
                         </div>
+
+
                     </div>
                     <hr class="my-0">
                     <div class="card-body">
@@ -143,10 +160,11 @@
         </div>
     </div>
 
-
     <script src="{{ asset('backoffice/libs/apexcharts/dist/apexcharts.min.js') }}"></script>
     <script src="{{ asset('backoffice/js/chartPresensi.js') }}"></script>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="{{ env('MIDTRANS_CLIENT_KEY') }}">
+    </script>
 
     <script>
         $(document).ready(function() {

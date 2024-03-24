@@ -2,7 +2,6 @@
 @section('title', 'Presensi Sholat - Sycma Attendance')
 
 @section('content')
-
     <div class="container-xxl flex-grow-1 container-p-y">
         @if (session('info'))
             <div class="alert alert-info alert-dismissible fade show" role="alert">
@@ -188,6 +187,38 @@
                 </div>
             </div>
             <!-- /List Data Gender, Jurusan, dan kelas  -->
+        </div>
+    </div>
+
+    <div class="modal fade show {{ $is_active == 1 ? 'hidden' : '' }}" id="modalCenter" tabindex="-1"
+        style="display: {{ $displayStyle }}; background-color: rgba(105, 122, 141, 0.5);" aria-modal="true"
+        role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <h5 class="modal-title text-center mt-3" id="modalCenterTitle">Selesaikan Pembayaran</h5>
+                <div class="modal-body">
+                    <form action="{{ route('checkout-process') }}" method="POST">
+                        @csrf
+                        <input type="hidden" name="user_id" value="{{ $admin->id }}">
+                        <input type="hidden" name="product_id" value="{{ $product->id }}">
+                        <input type="hidden" name="price" value="{{ $product->harga }}">
+                        <h2 class="text-center fw-bold">Lanjutkan Pembayaran</h2>
+                        <div class="icon text-center mb-4 animate-bounce">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="150" height="150" viewBox="0 0 24 24"
+                                style="fill: rgb(33, 148, 255);transform: ;msFilter:;">
+                                <path
+                                    d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8z">
+                                </path>
+                                <path d="M11 11h2v6h-2zm0-4h2v2h-2z"></path>
+                            </svg>
+                        </div>
+                        <p class="text-muted text-center">Selesaikan pembayaran untuk melanjutkan proses presensi</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-info">Pembayaran</button>
+                </div>
+                </form>
+            </div>
         </div>
     </div>
 

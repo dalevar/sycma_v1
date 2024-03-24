@@ -7,7 +7,7 @@
     <meta name="viewport"
         content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-    <title>@yield('title', 'Dashboard - Sycma Attendance')</title>
+    <title>@yield('title', 'Checkout - Sycma Attendance')</title>
 
     <meta name="description" content="" />
 
@@ -47,67 +47,50 @@
     <link rel="stylesheet" href="{{ asset('backoffice/libs/apexcharts/dist/apexcharts.css') }}">
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 
-
-
     <!-- Helpers -->
     <script src="{{ asset('backoffice/assets/vendor/js/helpers.js') }}"></script>
     <script src="{{ asset('backoffice/assets/js/config.js') }}"></script>
+
+    <script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="{{ env('MIDTRANS_CLIENT_KEY') }}">
+    </script>
 </head>
 
 <body>
-    <!-- Layout wrapper -->
-    <div class="layout-wrapper layout-content-navbar">
-        <div class="layout-container">
-            <!-- Menu -->
-            @include('dashboard.partials.sidebar')
-            <!-- / Menu -->
-
-            <!-- Layout container -->
-            <div class="layout-page">
-
-                <!-- Navbar -->
-                @include('dashboard.partials.navbar')
-                <!-- / Navbar -->
-
-                <!-- Content wrapper -->
-                <div class="content-wrapper">
-                    <!-- Content -->
-                    @yield('content')
-                    <!-- / Content -->
-
-                    <!-- Footer -->
-                    <footer class="content-footer footer bg-footer-theme">
-                        <div
-                            class="container-xxl d-flex flex-wrap justify-content-between py-2 flex-md-row flex-column">
-                            <div class="mb-2 mb-md-0">
-                                ©
-                                <script>
-                                    document.write(new Date().getFullYear());
-                                </script>
-                                , made with ❤️ by
-                                <a class="footer-link fw-bolder">Sycma
-                                    Attendance</a>
+    <!-- Content -->
+    <div class="container-xxl">
+        <div class="authentication-wrapper authentication-basic container-p-y">
+            <div class="card">
+                <div class="card-body">
+                    <div class="misc-wrapper " style="padding-top: 3em">
+                        <h1 class="mb-2 mx-2  font-weight-bold" style="font-size:3em">Informasi Checkout
+                        </h1>
+                        <p class="mb-4 mx-2 ">Silahkan cek kembali informasi paket anda</p>
+                        <div class="row">
+                            <div class="mb-3 col-md-6">
+                                <div class="form-group">
+                                    <label for="phone">Nama Produk</label>
+                                    <input type="text" class="form-control" id="nama_product"
+                                        value="{{ $product->nama_product }}" disabled>
+                                </div>
                             </div>
-                            <div>
-                                <a href="https://themeselection.com/license/" class="footer-link me-4"
-                                    target="_blank">License</a>
-                                <a href="#" target="_blank" class="footer-link me-4">Support</a>
+                            <div class="mb-3 col-md-6">
+                                <div class="form-group">
+                                    <label for="package">Harga Produk</label>
+                                    <input type="text" class="form-control" id="harga"
+                                        value="Rp. {{ number_format($product->harga, 0, ',', '.') }}" disabled>
+                                </div>
                             </div>
                         </div>
-                    </footer>
-                    <!-- / Footer -->
-
-                    <div class="content-backdrop fade"></div>
+                        <div class="button-group">
+                            <button type="submit" id="pay-button" class="btn btn-success">Bayar</button>
+                            <a href="{{ route('dashboard-admin.index') }}" class="btn btn-danger">Kembali</a>
+                        </div>
+                    </div>
                 </div>
-                <!-- Content wrapper -->
             </div>
-            <!-- / Layout page -->
         </div>
-
-        <!-- Overlay -->
-        <div class="layout-overlay layout-menu-toggle"></div>
     </div>
-    <!-- / Layout wrapper -->
+    <!-- / Content -->
 
     <!-- Core JS -->
     <!-- build:js assets/vendor/js/core.js -->
@@ -143,7 +126,29 @@
     {{-- Apex Chart --}}
     <script src="{{ asset('backoffice/libs/apexcharts/dist/apexcharts.min.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-
+    {{-- <script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="{{ env('MIDTRANS_CLIENT_KEY') }}">
+    </script> --}}
+    <script>
+        document.getElementById('pay-button').onclick = function() {
+            // SnapToken acquired from previous step
+            snap.pay('{{ $payment->snap_token }}', {
+                // Optional
+                onSuccess: function(result) {
+                    window.location.href = '{{ route('checkout-success', $payment->id) }}';
+                },
+                // Optional
+                onPending: function(result) {
+                    /* You may add your own js here, this is just example */
+                    document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
+                },
+                // Optional
+                onError: function(result) {
+                    /* You may add your own js here, this is just example */
+                    document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
+                }
+            });
+        };
+    </script>
     @stack('scripts')
 </body>
 

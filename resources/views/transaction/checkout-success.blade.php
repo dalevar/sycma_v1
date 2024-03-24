@@ -7,7 +7,7 @@
     <meta name="viewport"
         content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-    <title>@yield('title', 'Dashboard - Sycma Attendance')</title>
+    <title>@yield('title', 'Checkout Success - Sycma Attendance')</title>
 
     <meta name="description" content="" />
 
@@ -55,59 +55,24 @@
 </head>
 
 <body>
-    <!-- Layout wrapper -->
-    <div class="layout-wrapper layout-content-navbar">
-        <div class="layout-container">
-            <!-- Menu -->
-            @include('dashboard.partials.sidebar')
-            <!-- / Menu -->
+    <!-- Content -->
 
-            <!-- Layout container -->
-            <div class="layout-page">
-
-                <!-- Navbar -->
-                @include('dashboard.partials.navbar')
-                <!-- / Navbar -->
-
-                <!-- Content wrapper -->
-                <div class="content-wrapper">
-                    <!-- Content -->
-                    @yield('content')
-                    <!-- / Content -->
-
-                    <!-- Footer -->
-                    <footer class="content-footer footer bg-footer-theme">
-                        <div
-                            class="container-xxl d-flex flex-wrap justify-content-between py-2 flex-md-row flex-column">
-                            <div class="mb-2 mb-md-0">
-                                ©
-                                <script>
-                                    document.write(new Date().getFullYear());
-                                </script>
-                                , made with ❤️ by
-                                <a class="footer-link fw-bolder">Sycma
-                                    Attendance</a>
-                            </div>
-                            <div>
-                                <a href="https://themeselection.com/license/" class="footer-link me-4"
-                                    target="_blank">License</a>
-                                <a href="#" target="_blank" class="footer-link me-4">Support</a>
-                            </div>
-                        </div>
-                    </footer>
-                    <!-- / Footer -->
-
-                    <div class="content-backdrop fade"></div>
-                </div>
-                <!-- Content wrapper -->
+    <!--Under Maintenance -->
+    <div class="container-xxl container-p-y">
+        <div class="misc-wrapper text-center" style="padding-top:6em">
+            <h1 class="mb-2 mx-2 text-center font-weight-bold" style="font-size:5em">Pembayaran Success!</h1>
+            <p class="mb-4" style="font-size: 1.4em">Terima kasih telah melakukan pembayaran. Silahkan lakukan proses
+                presensi.</p>
+            <a href="{{ route('dashboard-admin.index') }}" class="btn btn-primary">Kembali ke Dashboard</a>
+            <div class="mt-4">
+                <img src="{{ asset('backoffice/assets/img/illustrations/co-success.png') }}" alt="co-success"
+                    width="500" class="img-fluid" data-app-dark-img="illustrations/girl-doing-yoga-dark.png"
+                    data-app-light-img="illustrations/co-success.png" />
             </div>
-            <!-- / Layout page -->
         </div>
-
-        <!-- Overlay -->
-        <div class="layout-overlay layout-menu-toggle"></div>
     </div>
-    <!-- / Layout wrapper -->
+    <!-- /Under Maintenance -->
+    <!-- / Content -->
 
     <!-- Core JS -->
     <!-- build:js assets/vendor/js/core.js -->

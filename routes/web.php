@@ -6,6 +6,7 @@ use App\Http\Controllers\GuruController;
 use App\Http\Controllers\KelasController;
 use App\Http\Controllers\SiswaController;
 use App\Http\Controllers\JurusanController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\PresensiController;
 use App\Http\Controllers\auth\authController;
 use App\Http\Controllers\DashboardController;
@@ -167,3 +168,8 @@ Route::post('guru/import', [GuruController::class, 'import'])->name('guru.import
 
 // Export Route
 Route::post('presensi/export', [PresensiController::class, 'export'])->name('presensi.export');
+
+// Payment Route
+Route::post('checkout', [PaymentController::class, 'process'])->name('checkout-process');
+Route::get('checkout/{id}', [PaymentController::class, 'checkout'])->name('checkout');
+Route::get('checkout/success/{id}', [PaymentController::class, 'success'])->name('checkout-success');

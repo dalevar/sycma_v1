@@ -31,6 +31,11 @@ class Product extends Model
         return $this->belongsTo(Category::class);
     }
 
+    public function payment()
+    {
+        return $this->hasMany(Payment::class);
+    }
+
     // mengambil data produk dengan kategori 'Software'
     public function scopeSoftware($query)
     {

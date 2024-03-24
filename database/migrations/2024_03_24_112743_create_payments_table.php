@@ -14,10 +14,11 @@ return new class extends Migration
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
             $table->string('order_id');
+            $table->foreignId('user_id')->constrained('users');
             $table->foreignId('product_id')->constrained('products');
             $table->double('price');
             $table->string('status');
-            $table->string('checkout_link');
+            $table->string('snap_token')->nullable();
             $table->timestamps();
         });
     }

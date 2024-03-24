@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Payment;
 use App\Models\Sekolah;
 use Illuminate\Http\Request;
 use App\Models\PresensiSholat;
@@ -14,6 +15,24 @@ class DashboardController extends Controller
         $admin = Auth::guard('admin')->user();
         $sekolah = $admin->sekolah;
         $namaAdmin = $admin->name;
+        $product = $admin->product;
+
+        // Check di payments apakah statusnya sudah success atau masih pending
+        $paymentStatus = Payment::where('user_id', $admin->id)->where('status', 'success')->first();
+        $status = null;
+        if ($paymentStatus) {
+            $status = $paymentStatus->status;
+        }
+
+        $is_active = $admin->is_active;
+        if ($status === 'success' && $is_active == 0) {
+            $admin->update([
+                'is_active' => 1
+            ]);
+        }
+
+        $displayStyle = ($is_active == 0) ? 'block' : 'none';
+
 
         $totalDataSiswa = $sekolah->siswa->count();
         $totalSiswaLaki = $sekolah->siswa->where('jenis_kelamin', 'L')->count();
@@ -32,7 +51,7 @@ class DashboardController extends Controller
         $totalSiswaPerempuan = $sekolah->siswa->where('jenis_kelamin', 'P')->count();
 
         $chart = $chart->build();
-        return view('dashboard.pages.admin.dashboard_main.dashboard', compact('admin', 'sekolah', 'totalDataSiswa', 'totalSiswaLaki', 'totalSiswaPerempuan', 'totalJurusan', 'totalKelas', 'presensi', 'kelas', 'jurusan', 'chart', 'namaAdmin'));
+        return view('dashboard.pages.admin.dashboard_main.dashboard', compact('admin', 'sekolah', 'totalDataSiswa', 'totalSiswaLaki', 'totalSiswaPerempuan', 'totalJurusan', 'totalKelas', 'presensi', 'kelas', 'jurusan', 'chart', 'namaAdmin', 'is_active', 'displayStyle', 'product'));
     }
 
     public function dashboardGuru(\App\Charts\PresensiChart $chart)
@@ -69,8 +88,14 @@ class DashboardController extends Controller
         $namaAdmin = $admin->name;
         $productAdmin = $admin->product;
 
+        $status = Payment::where('user_id', $admin->id)->where('status', 'success')->first();
+        if ($status) {
+            $status = $status->status;
+        } else {
+            $status = 'pending';
+        }
 
-        return view('dashboard.pages.admin.profile.profile', compact('admin', 'sekolah', 'namaAdmin', 'sekolah'));
+        return view('dashboard.pages.admin.profile.profile', compact('admin', 'sekolah', 'namaAdmin', 'sekolah', 'productAdmin', 'status'));
     }
 
     public function updateProfileAdmin(Request $request)
