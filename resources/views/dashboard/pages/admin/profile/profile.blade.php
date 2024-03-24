@@ -24,9 +24,6 @@
                                 <h5 class="">Profile Details</h5>
                             </div>
                             <div class="col-md-6 text-end">
-                                <p class="text-muted">Masa aktif akun : </p>
-                            </div>
-                            <div class="col-md-12 text-start">
                                 <h5 class="fw-bold">Status Pembayaran Paket: <span
                                         class="badge {{ $status == 'success' ? 'bg-success' : 'bg-secondary' }}">{{ $status }}</span>
                                 </h5>
@@ -38,20 +35,6 @@
                         <div class="d-flex align-items-start align-items-sm-center gap-4">
                             <img src="{{ asset('backoffice/assets/img/avatars/admin.png') }}" alt="user-avatar"
                                 class="d-block rounded" height="100" width="100" id="uploadedAvatar">
-
-                            <div class="button-wrapper">
-                                {{-- <label for="upload" class="btn bg-secondary  text-muted me-2 mb-4" tabindex="0">
-                                    <span class="d-none d-sm-block">Unggah Foto</span>
-                                    <i class="bx bx-upload d-block d-sm-none"></i>
-                                    <input type="file" id="upload" class="account-file-input" hidden=""
-                                        accept="image/png, image/jpeg" disabled>
-                                </label>
-                                <button type="button" disabled class="btn btn-outline-secondary account-image-reset mb-4">
-                                    <i class="bx bx-reset d-block d-sm-none"></i>
-                                    <span class="d-none d-sm-block">Reset</span>
-                                </button>
-                                <p class="text-muted mb-0">Allowed JPG, GIF or PNG. Max size of 800K</p> --}}
-                            </div>
                         </div>
 
 

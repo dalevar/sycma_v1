@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Payment;
 use App\Models\Sekolah;
+use Carbon\CarbonInterval;
 use Illuminate\Http\Request;
 use App\Models\PresensiSholat;
 use Illuminate\Support\Facades\Auth;
@@ -95,7 +97,7 @@ class DashboardController extends Controller
             $status = 'pending';
         }
 
-        return view('dashboard.pages.admin.profile.profile', compact('admin', 'sekolah', 'namaAdmin', 'sekolah', 'productAdmin', 'status'));
+        return view('dashboard.pages.admin.profile.profile', compact('admin', 'sekolah', 'namaAdmin', 'sekolah', 'productAdmin', 'status',));
     }
 
     public function updateProfileAdmin(Request $request)
