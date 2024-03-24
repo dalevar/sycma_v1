@@ -40,7 +40,7 @@
         <div class="container" data-aos="fade-up">
 
             <div class="section-title">
-                <h2>About Us</h2>
+                <h2>Tentang Kami</h2>
             </div>
 
             <div class="row content">
@@ -64,7 +64,7 @@
                         kehadiran sekolah. Kami percaya bahwa kehadiran siswa merupakan salah satu aspek penting dalam
                         pendidikan. Dengan kehadiran yang baik, siswa dapat mengikuti pembelajaran dengan optimal dan
                         mencapai hasil belajar yang maksimal.</p>
-                    <a href="#" class="btn-learn-more">Pelajari</a>
+                    <a href="{{ url('tentang') }}" class="btn-learn-more">Pelajari</a>
                 </div>
             </div>
 
@@ -148,7 +148,7 @@
         <div class="container" data-aos="fade-up">
 
             <div class="section-title">
-                <h2>Services</h2>
+                <h2>LAYANAN</h2>
                 <p>menawarkan berbagai layanan untuk membantu sekolah dalam mengelola kehadiran siswa. </p>
             </div>
 
@@ -215,11 +215,11 @@
     </section><!-- End Cta Section -->
 
     <!-- ======= Portfolio Section ======= -->
-    <section id="portfolio" class="portfolio">
+    <section id="produk" class="portfolio">
         <div class="container" data-aos="fade-up">
 
             <div class="section-title">
-                <h2>Product</h2>
+                <h2>PRODUK</h2>
                 <p>Selain aplikasi manajemen kehadiran siswa, kami juga memiliki produk menarik lainnya yang dapat membantu
                     sekolah dalam mengelola kegiatan belajar mengajar secara lebih efektif.</p>
             </div>
@@ -238,10 +238,11 @@
                     <div class="portfolio-info">
                         <h4>Sycma ARFID</h4>
                         <p>Attendance teknologi RFID</p>
-                        <a href="{{ asset('import/assets/img/portfolio/portfolio-1.jpg') }}"
-                            data-gallery="portfolioGallery" class="portfolio-lightbox preview-link"
-                            title="More Details"><i class="bx bx-info-circle"></i></a>
-                        <a href="portfolio-details.html" class="details-link" title="Shop Now"><i
+                        <a href="#" data-gallery="portfolioGallery" class="portfolio-lightbox preview-link"
+                            title="Sycma ARFID: Solusi Inovatif untuk Mengelola Data Absensi dan Manajemen Sekolah
+                            Sycma ARFID adalah solusi terdepan untuk absensi dan manajemen sekolah yang mudah, akurat, dan terjangkau. Platform ini dirancang untuk membantu sekolah mengotomatisasi proses absensi, mengelola data siswa, dan meningkatkan komunikasi antara sekolah, orang tua, dan siswa."><i
+                                class="bx bx-info-circle"></i></a>
+                        <a href="https://www.tokopedia.com/" class="details-link" title="Shop Now"><i
                                 class="bx bx-shopping-bag"></i></a>
                     </div>
                 </div>
@@ -251,10 +252,11 @@
                     <div class="portfolio-info">
                         <h4>Ultra Attendance</h4>
                         <p>Software as a Services Integrated</p>
-                        <a href="{{ asset('import/assets/img/portfolio/portfolio-3.jpg') }}"
-                            data-gallery="portfolioGallery" class="portfolio-lightbox preview-link"
-                            title="More Details"><i class="bx bx-info-circle"></i></a>
-                        <a href="portfolio-details.html" class="details-link" title="Pesan Sekarang"><i
+                        <a href="#" data-gallery="portfolioGallery" class="portfolio-lightbox preview-link"
+                            title="Ultra Attendance: Solusi Absensi Modern untuk Sekolah dengan Model Software as a Service (SaaS)
+                            Ultra Attendance adalah solusi absensi siswa yang modern dan efisien menggunakan model Software as a Service (SaaS). Tidak perlu instalasi software rumit, Ultra Attendance beroperasi sepenuhnya melalui internet, sehingga Anda dapat mengakses dan mengelolanya dari mana saja dan kapan saja."><i
+                                class="bx bx-info-circle"></i></a>
+                        <a href="https://www.whatsapp.com/" class="details-link" title="Pesan Sekarang"><i
                                 class="bx bx-navigation"></i></a>
                     </div>
                 </div>
@@ -394,7 +396,7 @@
         <div class="container" data-aos="fade-up">
 
             <div class="section-title">
-                <h2>Contact</h2>
+                <h2>KONTAK KAMI</h2>
                 <p>Punya pertanyaan atau ingin berdiskusi lebih lanjut tentang SYCMA? Silahkan hubungi kami melalui berbagai
                     saluran yang tersedia:<br>
                     <strong>Kami berharap dapat membantu Anda mengelola sekolah dengan lebih mudah dan efisien.</strong>

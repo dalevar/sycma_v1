@@ -1,10 +1,22 @@
 @extends('landingpage.layouts.main')
 
 @section('title', 'Harga Aplikasi Sycma Attendance')
+@section('breadcrumbs')
+    <section id="breadcrumbs" class="breadcrumbs">
+        <div class="container">
+
+            <ol>
+                <li><a href="index.html">Home</a></li>
+                <li>Inner Page</li>
+            </ol>
+            <h2>Inner Page</h2>
+
+        </div>
+    </section>
+@endsection
 
 @section('main')
     <section id="hero" class="d-flex align-items-center">
-
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 d-flex flex-column justify-content-center pt-4 pt-lg-0 order-2 order-lg-1"
@@ -221,10 +233,6 @@
             </div>
         </div>
     </section>
-
-    {{-- <section id="clients">
-
-    </section> --}}
 
     <hr class="divider">
 @endsection

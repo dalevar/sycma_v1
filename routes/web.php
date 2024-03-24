@@ -31,6 +31,10 @@ Route::get('/harga', function () {
     return view('landingpage.pages.harga');
 });
 
+Route::get('/tentang', function () {
+    return view('landingpage.pages.tentang');
+});
+
 Route::get('/product-select', [WizardValidation::class, 'getPaket'])->name('product-select');
 
 // Authentication Route

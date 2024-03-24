@@ -40,7 +40,16 @@
     <!-- ======= Main Section ======= -->
 
     <main id="main">
-        @yield('main')
+        <section id="breadcrumbs" class="breadcrumbs">
+            <div class="container">
+                @yield('breadcrumbs')
+            </div>
+        </section>
+        <section class="inner-page">
+            <div class="container">
+                @yield('content')
+            </div>
+        </section>
     </main><!-- End #main -->
 
     <!-- ======= Footer ======= -->
